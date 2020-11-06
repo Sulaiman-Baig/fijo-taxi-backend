@@ -86,33 +86,40 @@ module.exports = {
                 },
             }).then(isDriverExist => {
                 if (isDriverExist) {
-                    const verify_password = hashedpassword.verify(
-                        req.body.password, isDriverExist.password
-                    );
-                    if (verify_password) {
-                        const token = jwt.sign({
-                            email: req.body.email,
-                            driverId: isDriverExist.id
-                        },
-                            "very-long-string-for-secret", {
-                            expiresIn: 3600
-                        }
+                    if (isDriverExist.isApproved == true) {
+                        const verify_password = hashedpassword.verify(
+                            req.body.password, isDriverExist.password
                         );
+                        if (verify_password) {
+                            const token = jwt.sign({
+                                email: req.body.email,
+                                driverId: isDriverExist.id
+                            },
+                                "very-long-string-for-secret", {
+                                expiresIn: 3600
+                            }
+                            );
 
-                        res.json({
-                            message: "successfully login",
-                            accessToken: token,
-                            driver: isDriverExist,
-                            expiresIn: '3600'
-                        })
-                    } else {
+                            res.json({
+                                message: "successfully login",
+                                accessToken: token,
+                                driver: isDriverExist,
+                                expiresIn: '3600'
+                            })
+                        } else {
+                            res.status(http_status_codes.UNAUTHORIZED).json({
+                                error: 'invalidcredentials'
+                            })
+                        }
+                    } else if (isDriverExist.isApproved == false) {
                         res.status(http_status_codes.UNAUTHORIZED).json({
-                            error: 'invalidcredentials'
-                        })
+                            message: 'Sorry, you are not approved by admin yet.'
+                        });
                     }
+
                 } else {
                     res.status(http_status_codes.UNAUTHORIZED).json({
-                        error: 'invalidcredentials'
+                        error: 'driver does not exist'
                     })
                 }
             })
