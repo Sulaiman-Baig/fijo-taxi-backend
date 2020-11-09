@@ -105,4 +105,60 @@ module.exports = {
         }
     },
 
+    async updatePassenger(req, res, next) {
+        try {
+            passengerId = req.params.passengerId;
+            const {
+                firstName,
+                lastName,
+                phoneNumber,
+                addressWithCityAndPostcode,
+                gender,
+                profilePhoto
+            } = req.body
+            Passenger.update({
+                firstName: firstName,
+                lastName: lastName,
+                phoneNumber: phoneNumber,
+                addressWithCityAndPostcode: addressWithCityAndPostcode,
+                gender: gender,
+                profilePhoto: profilePhoto
+            }, {
+                where: {
+                    id: passengerId
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured in updatePassenger"
+            })
+        }
+    },
+
+    async getbyId(req, res, next) {
+        try {
+            const passenger = await Passenger.findOne({ where: { id: req.params.passengerId } });
+            return res.status(http_status_codes.OK).json(passenger);
+
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single passenger"
+            })
+        }
+    },
+
+    async getAll(req, res, next) {
+        try {
+            const passengers = await Passenger.findAll();
+            return res.status(http_status_codes.OK).json(passengers);
+        } catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching All Passengers"
+            });
+        }
+    },
+
 };

@@ -8,6 +8,9 @@ router.post('/signup', driverController.createDriver);
 router.post('/signin', driverController.signinDriver);
 router.get('/approve-driver/:driverId', driverController.approveDriver);
 router.get('/dis-approve-driver/:driverId', driverController.disApproveDriver);
+router.post('/update/:driverId', driverController.updateDriver);
+router.get('/get/:driverId', driverController.getbyId);
+router.get('/getall', driverController.getAll);
 
 
 

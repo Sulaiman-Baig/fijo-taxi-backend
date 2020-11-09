@@ -13,6 +13,7 @@ module.exports = {
 
         try {
 
+
             const {
                 firstName,
                 lastName,
@@ -28,8 +29,17 @@ module.exports = {
                 driverPhoto,
                 bankDetailsOfDriver,
                 phoneNumber,
-                addressWithCityAndPostcode,
-                gender
+                gender,
+                address,
+                postalCode,
+                city,
+                nie_Dnle,
+                nie_Dnle_FrontPic,
+                nie_Dnle_BackPic,
+                nationality,
+                bankName,
+                accountNumber,
+                swiftCode,
             } = req.body;
 
             Driver.findOne({
@@ -56,8 +66,17 @@ module.exports = {
                         driverPhoto: driverPhoto,
                         bankDetailsOfDriver: bankDetailsOfDriver,
                         phoneNumber: phoneNumber,
-                        addressWithCityAndPostcode: addressWithCityAndPostcode,
+                        adrerss: address,
+                        postalCode: postalCode,
+                        city: city,
                         gender: gender,
+                        nie_Dnle: nie_Dnle,
+                        nie_Dnle_FrontPic: nie_Dnle_FrontPic,
+                        nie_Dnle_BackPic: nie_Dnle_BackPic,
+                        nationality: nationality,
+                        bankName: bankName,
+                        accountNumber: accountNumber,
+                        swiftCode: swiftCode,
                         isApproved: false
                     });
 
@@ -130,7 +149,7 @@ module.exports = {
         }
     },
 
-     async approveDriver(req, res, next) {
+    async approveDriver(req, res, next) {
         try {
             driverId = req.params.driverId;
 
@@ -171,6 +190,100 @@ module.exports = {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in disApproveDriver"
             })
+        }
+    },
+
+    async updateDriver(req, res, next) {
+        try {
+            driverId = req.params.driverId;
+            const {
+                firstName,
+                lastName,
+                licenseNumber,
+                vehicleRegistrationCertificateNumber,
+                vehicleNumberPlate,
+                vehiclePhoto,
+                brandOfCar,
+                typeOfCar,
+                numberOfSeating,
+                driverPhoto,
+                bankDetailsOfDriver,
+                phoneNumber,
+                addressWithCityAndPostcode,
+                gender,
+                address,
+                postalCode,
+                city,
+                nie_Dnle,
+                nie_Dnle_FrontPic,
+                nie_Dnle_BackPic,
+                nationality,
+                bankName,
+                accountNumber,
+                swiftCode,
+
+            } = req.body
+            Driver.update({
+                firstName: firstName,
+                lastName: lastName,
+                licenseNumber: licenseNumber,
+                vehicleRegistrationCertificateNumber: vehicleRegistrationCertificateNumber,
+                vehicleNumberPlate: vehicleNumberPlate,
+                vehiclePhoto: vehiclePhoto,
+                brandOfCar: brandOfCar,
+                typeOfCar: typeOfCar,
+                numberOfSeating: numberOfSeating,
+                driverPhoto: driverPhoto,
+                bankDetailsOfDriver: bankDetailsOfDriver,
+                phoneNumber: phoneNumber,
+                addressWithCityAndPostcode: addressWithCityAndPostcode,
+                gender: gender,
+                adrerss: address,
+                postalCode: postalCode,
+                city: city,
+                gender: gender,
+                nie_Dnle: nie_Dnle,
+                nie_Dnle_FrontPic: nie_Dnle_FrontPic,
+                nie_Dnle_BackPic: nie_Dnle_BackPic,
+                nationality: nationality,
+                bankName: bankName,
+                accountNumber: accountNumber,
+                swiftCode: swiftCode,
+            }, {
+                where: {
+                    id: driverId
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured in updateDriver"
+            })
+        }
+    },
+
+    async getbyId(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId } });
+            return res.status(http_status_codes.OK).json(driver);
+
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+
+    async getAll(req, res, next) {
+        try {
+            const drivers = await Driver.findAll();
+            return res.status(http_status_codes.OK).json(drivers);
+        } catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching All drivers"
+            });
         }
     },
 

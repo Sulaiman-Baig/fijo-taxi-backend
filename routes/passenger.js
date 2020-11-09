@@ -6,6 +6,11 @@ const isAuth = require('../middleware/check-auth');
 
 router.post('/signup', passengerController.createPassenger);
 router.post('/signin', passengerController.signinPassenger);
+router.post('/update/:passengerId', passengerController.updatePassenger);
+router.get('/get/:passengerId', passengerController.getbyId);
+router.get('/getall', passengerController.getAll);
+
+
 
 
 
