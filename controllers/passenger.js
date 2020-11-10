@@ -13,14 +13,17 @@ module.exports = {
 
         try {
             const {
+
                 firstName,
                 lastName,
                 email,
                 password,
                 phoneNumber,
-                addressWithCityAndPostcode,
                 gender,
-                profilePhoto
+                profilePhoto,
+                address,
+                postalCode,
+                city
             } = req.body;
 
             Passenger.findOne({
@@ -40,7 +43,10 @@ module.exports = {
                         phoneNumber: phoneNumber,
                         addressWithCityAndPostcode: addressWithCityAndPostcode,
                         gender: gender,
-                        profilePhoto: profilePhoto
+                        profilePhoto: profilePhoto,
+                        address: address,
+                        postalCode: postalCode,
+                        city: city
                     });
 
                     return res.status(http_status_codes.CREATED).json({ error: 'Passenger is Created Successfully' });
@@ -114,7 +120,10 @@ module.exports = {
                 phoneNumber,
                 addressWithCityAndPostcode,
                 gender,
-                profilePhoto
+                profilePhoto,
+                address,
+                postalCode,
+                city,
             } = req.body
             Passenger.update({
                 firstName: firstName,
@@ -122,7 +131,10 @@ module.exports = {
                 phoneNumber: phoneNumber,
                 addressWithCityAndPostcode: addressWithCityAndPostcode,
                 gender: gender,
-                profilePhoto: profilePhoto
+                profilePhoto: profilePhoto,
+                address: address,
+                postalCode: postalCode,
+                city: city
             }, {
                 where: {
                     id: passengerId
