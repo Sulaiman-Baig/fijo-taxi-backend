@@ -6,7 +6,9 @@ const Sequelize = require('sequelize');
 const AdminModel = require("../models/admin");
 const BookingModel = require("../models/booking");
 const ChatModel = require("../models/chat");
+const ConversationModel = require("../models/conversation");
 const DriverModel = require("../models/driver");
+const MessageModel = require("../models/message");
 const PassengerModel = require("../models/passenger");
 const VehicleModel = require("../models/vehicle");
 const WithdrawModel = require("../models/withdraw");
@@ -32,8 +34,10 @@ const sequelize = new Sequelize("fijotaxiapp", "root", "root1234", {
 const Admin = AdminModel(sequelize, Sequelize);
 const Booking = BookingModel(sequelize, Sequelize);
 const Chat = ChatModel(sequelize, Sequelize);
+const Conversation = ConversationModel(sequelize, Sequelize);
 const Driver = DriverModel(sequelize, Sequelize);
 const Passenger = PassengerModel(sequelize, Sequelize);
+const Message = MessageModel(sequelize, Sequelize);
 const Vehicle = VehicleModel(sequelize, Sequelize);
 const Withdraw = WithdrawModel(sequelize, Sequelize);
 
@@ -55,6 +59,9 @@ Passenger.hasMany(Booking);
 Vehicle.belongsTo(Driver);
 Driver.hasMany(Vehicle);
 
+Message.belongsTo(Conversation);
+Conversation.hasMany(Message, { foreignKey: 'conversationId', sourceKey: 'id' });
+
 
 
 
@@ -74,7 +81,9 @@ module.exports = {
     Admin,
     Booking,
     Chat,
+    Conversation,
     Driver,
+    Message,
     Passenger,
     Vehicle,
     Withdraw
