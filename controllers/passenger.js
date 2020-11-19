@@ -25,6 +25,7 @@ module.exports = {
                 postalCode,
                 city
             } = req.body;
+           
 
             Passenger.findOne({
                 where: {
@@ -41,7 +42,6 @@ module.exports = {
                         password: hashedpassword.generate(password),
                         email: email,
                         phoneNumber: phoneNumber,
-                        addressWithCityAndPostcode: addressWithCityAndPostcode,
                         gender: gender,
                         profilePhoto: profilePhoto,
                         address: address,
@@ -129,7 +129,6 @@ module.exports = {
                 firstName: firstName,
                 lastName: lastName,
                 phoneNumber: phoneNumber,
-                addressWithCityAndPostcode: addressWithCityAndPostcode,
                 gender: gender,
                 profilePhoto: profilePhoto,
                 address: address,
