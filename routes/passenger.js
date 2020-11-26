@@ -9,6 +9,8 @@ router.post('/signin', passengerController.signinPassenger);
 router.post('/update/:passengerId', passengerController.updatePassenger);
 router.get('/get/:passengerId', passengerController.getbyId);
 router.get('/getall', passengerController.getAll);
+router.post('/find-passenger-by-email', passengerController.findPassengerByEmail);
+router.post('/find-passenger-by-phn-no', passengerController.findPassengerByPhoneNumber);
 
 
 

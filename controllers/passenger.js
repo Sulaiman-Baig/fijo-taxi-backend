@@ -25,7 +25,7 @@ module.exports = {
                 postalCode,
                 city
             } = req.body;
-           
+
 
             Passenger.findOne({
                 where: {
@@ -146,6 +146,50 @@ module.exports = {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in updatePassenger"
             })
+        }
+    },
+
+    async findPassengerByEmail(req, res, next) {
+        try {
+            const {
+                email
+            } = req.body;
+
+            const passenger = await Passenger.findOne({
+                where: { email: email }
+            });
+            if (passenger) {
+                return res.status(http_status_codes.OK).json({passenger: passenger, isPassengerExist: true});
+            } else {
+                return res.status(http_status_codes.OK).json({passenger: null, isPassengerExist: false});
+            }
+        }
+        catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in finding findPassengerByEmail"
+            });
+        }
+    },
+
+    async findPassengerByPhoneNumber(req, res, next) {
+        try {
+            const {
+                phoneNumber
+            } = req.body;
+
+            const passenger = await Passenger.findOne({
+                where: { phoneNumber: phoneNumber }
+            });
+            if (passenger) {
+                return res.status(http_status_codes.OK).json({passenger: passenger, isPassengerExist: true});
+            } else {
+                return res.status(http_status_codes.OK).json({passenger: null, isPassengerExist: false});
+            }
+        }
+        catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in finding findPassengerByphoneNumber"
+            });
         }
     },
 
