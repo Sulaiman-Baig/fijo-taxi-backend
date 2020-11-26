@@ -2,6 +2,7 @@ const http_status_codes = require('http-status-codes');
 const hashedpassword = require("password-hash");
 const sequelize = require("sequelize");
 const op = sequelize.Op;
+const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
 const {
@@ -213,6 +214,73 @@ module.exports = {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All Passengers"
             });
+        }
+    },
+
+    async forgotPassword(req, res, next) {
+        const reqData = req.body;
+        Passenger.findOne({
+            where: { email: reqData.email }
+        }).then(isPassenger => {
+            if (isPassenger) {
+                // send email
+                var passengermail = req.body.email;
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        passenger: 'Testermail018@gmail.com',
+                        pass: 'imrankamboh'
+                    }
+                });
+                var mailOptions = {
+                    from: ' ', // sender address
+                    to: passengermail, // list of receivers
+                    subject: 'Passenger Password Verification Code', // Subject line
+                    text: 'Here is a code to setup your password again', // plain text body
+                    html: 'Hi Dear Passenger <br>Please verify your email using the link below and get back your password! <b style="font-size:24px;margin-left:30px"> Your code - ' + (isPassenger.id) * 109786 + '<b>' // html body
+
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        res.json({
+                            passenger: isPassenger,
+                            verificationCode: (isPassenger.id) * 109786
+                        });
+                    }
+                });
+
+            } else {
+                res.json({ message: "Email does not exit" });
+            }
+        }).catch(err => {
+            console.log(err);
+            res.json("Some Error Occured!");
+        });
+    },
+
+    async updatePassword(req, res, next) {
+        try {
+            id = req.params.id;
+            const {
+                password
+            } = req.body
+
+            Passenger.update({
+                password: hashedpassword.generate(password)
+            }, {
+                where: {
+                    id: id
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "An error updatePassword"
+            })
         }
     },
 
