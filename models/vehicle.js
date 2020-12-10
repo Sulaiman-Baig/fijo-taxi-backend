@@ -6,18 +6,15 @@ module.exports = (sequelize, type) => {
             autoIncrement: true,
             required: true
         },
-        typeOfCar: type.STRING,
-        licenseNumber: type.STRING,
-        licenseNumberPhoto: type.STRING,
-        vehicleNumber: type.STRING,
-        vehicleNumberPhoto: type.STRING,
-        modalNumber: type.STRING,
-        brandOfCar: type.STRING,
-        image: type.STRING,
-        seats: type.STRING,
-
+        brand: type.STRING,
+        vehiclePhoto: type.STRING,
+        vehicleType: type.STRING,
+        noOfSeating: type.STRING,
+        vehicleRegNumber: type.STRING,
+        vehicleNoPlate: type.STRING,
+        noPlatePhoto: type.STRING,
+        lisenceNumber: type.STRING,
+        lisencePhoto: type.STRING
     });
-
-
 };
 

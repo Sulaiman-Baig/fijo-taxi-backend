@@ -22,6 +22,8 @@ module.exports = (sequelize, type) => {
     nationality: type.STRING,
     bankName: type.STRING,
     accountNumber: type.STRING,
+    currentLat: type.STRING,
+    currentLng: type.STRING,
     swiftCode: type.STRING,   
     isApproved: {
       type: type.BOOLEAN,

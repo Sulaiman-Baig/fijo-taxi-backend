@@ -24,14 +24,7 @@ module.exports = {
                 gender,
                 address,
                 postalCode,
-                city,
-                nie_Dnle,
-                nie_Dnle_FrontPic,
-                nie_Dnle_BackPic,
-                nationality,
-                bankName,
-                accountNumber,
-                swiftCode,
+                city                
             } = req.body;
 
             Driver.findOne({
@@ -54,13 +47,13 @@ module.exports = {
                         postalCode: postalCode,
                         city: city,
                         gender: gender,
-                        nie_Dnle: nie_Dnle,
-                        nie_Dnle_FrontPic: nie_Dnle_FrontPic,
-                        nie_Dnle_BackPic: nie_Dnle_BackPic,
-                        nationality: nationality,
-                        bankName: bankName,
-                        accountNumber: accountNumber,
-                        swiftCode: swiftCode,
+                        nie_Dnle: null,
+                        nie_Dnle_FrontPic: null,
+                        nie_Dnle_BackPic: null,
+                        nationality: null,
+                        bankName: null,
+                        accountNumber: null,
+                        swiftCode: null,
                         isApproved: false
                     });
 
@@ -226,6 +219,70 @@ module.exports = {
         } catch (error) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in updateDriver"
+            })
+        }
+    },
+
+    async createDriverBankDetails(req, res, next) {
+        try {
+            driverId = req.params.driverId;
+            const {                
+                nie_Dnle,
+                nie_Dnle_FrontPic,
+                nie_Dnle_BackPic,
+                nationality,
+                bankName,
+                accountNumber,
+                swiftCode,
+
+            } = req.body
+            Driver.update({
+                gender: gender,
+                nie_Dnle: nie_Dnle,
+                nie_Dnle_FrontPic: nie_Dnle_FrontPic,
+                nie_Dnle_BackPic: nie_Dnle_BackPic,
+                nationality: nationality,
+                bankName: bankName,
+                accountNumber: accountNumber,
+                swiftCode: swiftCode,
+            }, {
+                where: {
+                    id: driverId
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured in createDriverBankDetails"
+            })
+        }
+    },
+
+    async updateCurrentLocation(req, res, next) {
+        try {
+            driverId = req.params.driverId;
+            const {
+                currentLat,
+                currentLng,
+               
+
+            } = req.body
+            Driver.update({
+                currentLat: currentLat,
+                currentLng: currentLng,               
+            }, {
+                where: {
+                    id: driverId
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured in updateCurrentLocation"
             })
         }
     },

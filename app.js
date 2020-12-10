@@ -16,6 +16,7 @@ var chatRouter = require('./routes/message');
 var driverRouter = require('./routes/driver');
 var passengerRouter = require('./routes/passenger');
 var savedLocationRouter = require('./routes/saved_location');
+var vehicleRouter = require('./routes/vehicle');
 
 
 
@@ -61,6 +62,7 @@ app.use('/chat', chatRouter);
 app.use('/driver', driverRouter);
 app.use('/passenger', passengerRouter);
 app.use('/saved-location', savedLocationRouter);
+app.use('/vehicle', vehicleRouter);
 
 
 

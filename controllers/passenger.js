@@ -228,8 +228,8 @@ module.exports = {
                 var transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                        passenger: 'Testermail018@gmail.com',
-                        pass: 'imrankamboh'
+                        user: 'fijotaxi@gmail.com',
+                        pass: 'Juandecelaya@1066'
                     }
                 });
                 var mailOptions = {
