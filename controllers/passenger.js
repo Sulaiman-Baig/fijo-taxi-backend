@@ -48,10 +48,15 @@ module.exports = {
                         address: address,
                         postalCode: postalCode,
                         city: city
-                    });
-
-                    return res.status(http_status_codes.CREATED).json({ error: 'Passenger is Created Successfully' });
-
+                    })
+                        .then((passenger) => {
+                            return res.status(http_status_codes.CREATED).json(
+                                {
+                                    message: 'Passenger is Created Successfully',
+                                    passenger: passenger
+                                }
+                            );
+                        });
                 }
             });
         } catch (err) {
@@ -160,9 +165,9 @@ module.exports = {
                 where: { email: email }
             });
             if (passenger) {
-                return res.status(http_status_codes.OK).json({passenger: passenger, isPassengerExist: true});
+                return res.status(http_status_codes.OK).json({ passenger: passenger, isPassengerExist: true });
             } else {
-                return res.status(http_status_codes.OK).json({passenger: null, isPassengerExist: false});
+                return res.status(http_status_codes.OK).json({ passenger: null, isPassengerExist: false });
             }
         }
         catch (err) {
@@ -182,9 +187,9 @@ module.exports = {
                 where: { phoneNumber: phoneNumber }
             });
             if (passenger) {
-                return res.status(http_status_codes.OK).json({passenger: passenger, isPassengerExist: true});
+                return res.status(http_status_codes.OK).json({ passenger: passenger, isPassengerExist: true });
             } else {
-                return res.status(http_status_codes.OK).json({passenger: null, isPassengerExist: false});
+                return res.status(http_status_codes.OK).json({ passenger: null, isPassengerExist: false });
             }
         }
         catch (err) {
