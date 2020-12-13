@@ -56,9 +56,9 @@ module.exports = {
                         swiftCode: null,
                         isApproved: false
                     })
-                        .then((driver) => { 
+                        .then((driver) => {
                             return res.status(http_status_codes.CREATED).json({ message: 'Driver is Created Successfully', driverId: driver.id });
-                        });  
+                        });
                 }
             });
         } catch (err) {
@@ -82,11 +82,11 @@ module.exports = {
                 },
             }).then(isDriverExist => {
                 if (isDriverExist) {
-                    if (isDriverExist.isApproved == true) {
-                        const verify_password = hashedpassword.verify(
-                            req.body.password, isDriverExist.password
-                        );
-                        if (verify_password) {
+                    const verify_password = hashedpassword.verify(
+                        req.body.password, isDriverExist.password
+                    );
+                    if (verify_password) {
+                        if (isDriverExist.isApproved == true) {
                             const token = jwt.sign({
                                 email: req.body.email,
                                 driverId: isDriverExist.id
@@ -95,24 +95,22 @@ module.exports = {
                                 expiresIn: 3600
                             }
                             );
-
                             res.json({
                                 message: "successfully login",
                                 accessToken: token,
                                 driver: isDriverExist,
                                 expiresIn: '3600'
                             })
-                        } else {
+                        } else if (isDriverExist.isApproved == false) {
                             res.status(http_status_codes.UNAUTHORIZED).json({
-                                error: 'invalidcredentials'
-                            })
+                                message: 'Sorry, you are not approved by admin yet.'
+                            });
                         }
-                    } else if (isDriverExist.isApproved == false) {
+                    } else {
                         res.status(http_status_codes.UNAUTHORIZED).json({
-                            message: 'Sorry, you are not approved by admin yet.'
-                        });
+                            error: 'invalidcredentials'
+                        })
                     }
-
                 } else {
                     res.status(http_status_codes.UNAUTHORIZED).json({
                         error: 'driver does not exist'
