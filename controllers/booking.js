@@ -1,3 +1,4 @@
+const { RequestHeaderFieldsTooLarge } = require('http-errors');
 const http_status_codes = require('http-status-codes');
 const sequelize = require("sequelize");
 const op = sequelize.Op;
@@ -12,7 +13,7 @@ module.exports = {
 
     async findDrivers(req, res, next) {
         try {
-            
+
             const {
                 carSizeId,
                 city
@@ -44,7 +45,7 @@ module.exports = {
     },
 
     async createBooking(req, res, next) {
-        try { 
+        try {
             const {
                 cost,
                 pickup,
@@ -102,6 +103,64 @@ module.exports = {
 
     async getAllBookings(req, res, next) {
         try {
+            const bookings = await Booking.findAll();
+            return res.status(http_status_codes.OK).json(bookings);
+        } catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching getAllBookings"
+            });
+        }
+    },
+
+    async calculateEstimatedPrice(req, res, next) {
+        try {
+            const {
+                km,
+                isMorning,
+                isWeekend,
+                isAirport,
+                seatingCapacity
+            } = req.body;
+
+            // morning time
+            if (km < 25) {
+                if (isWeekend == false && isMorning == true) {
+                    if (seatingCapacity >= 5) {
+                        //  morning time & seating capacity >= 25
+                        let perKmPrice = (1.09 + 2.0 + 1.5);
+                        let estimatedPrice = (perKmPrice * km);
+                        const price = Math.ceil(estimatedPrice);
+                        res.json({ exactPrice: price });
+
+                    } else {
+                        // morning time & seating capacity is other than >= 25
+                        let perKmPrice = (1.09 + 2.0);
+                        let estimatedPrice = (perKmPrice * km);
+                        const price = Math.ceil(estimatedPrice);
+                        res.json({ exactPrice: price });
+                    }
+                }
+            }
+            else if (km > 25) {
+                if (isWeekend == false && isMorning == true) {
+                    if (seatingCapacity >= 5) {
+                        //  morning time & seating capacity >= 25
+                        let perKmPrice = (1.09 + 2.0 + 1.5);
+                        let estimatedPrice = (perKmPrice * km);
+                        const price = Math.ceil(estimatedPrice);
+                        res.json({ exactPrice: price });
+
+                    } else {
+                        // morning time & seating capacity is other than >= 25
+                        let perKmPrice = (1.09 + 2.0);
+                        let estimatedPrice = (perKmPrice * km);
+                        const price = Math.ceil(estimatedPrice);
+                        res.json({ exactPrice: price });
+                    }
+                }
+            }
+
+
             const bookings = await Booking.findAll();
             return res.status(http_status_codes.OK).json(bookings);
         } catch (err) {

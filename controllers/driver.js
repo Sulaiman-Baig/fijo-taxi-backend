@@ -14,7 +14,7 @@ module.exports = {
         try {
 
 
-            const { 
+            const {
                 firstName,
                 lastName,
                 email,
@@ -24,7 +24,7 @@ module.exports = {
                 gender,
                 address,
                 postalCode,
-                city                
+                city
             } = req.body;
 
             Driver.findOne({
@@ -41,8 +41,8 @@ module.exports = {
                         lastName: lastName,
                         password: hashedpassword.generate(password),
                         email: email,
-                        phoneNumber: phoneNumber,                       
-                        driverPhoto: driverPhoto,                   
+                        phoneNumber: phoneNumber,
+                        driverPhoto: driverPhoto,
                         address: address,
                         postalCode: postalCode,
                         city: city,
@@ -55,10 +55,10 @@ module.exports = {
                         accountNumber: null,
                         swiftCode: null,
                         isApproved: false
-                    });
-
-                    return res.status(http_status_codes.CREATED).json({ error: 'Driver is Created Successfully' });
-
+                    })
+                        .then((driver) => { 
+                            return res.status(http_status_codes.CREATED).json({ message: 'Driver is Created Successfully', driverId: driver.id });
+                        });  
                 }
             });
         } catch (err) {
@@ -176,8 +176,8 @@ module.exports = {
             const {
                 firstName,
                 lastName,
-                phoneNumber,               
-                driverPhoto,     
+                phoneNumber,
+                driverPhoto,
                 gender,
                 address,
                 postalCode,
@@ -226,7 +226,7 @@ module.exports = {
     async createDriverBankDetails(req, res, next) {
         try {
             driverId = req.params.driverId;
-            const {                
+            const {
                 nie_Dnle,
                 nie_Dnle_FrontPic,
                 nie_Dnle_BackPic,
@@ -237,7 +237,7 @@ module.exports = {
 
             } = req.body
             Driver.update({
-                gender: gender,
+
                 nie_Dnle: nie_Dnle,
                 nie_Dnle_FrontPic: nie_Dnle_FrontPic,
                 nie_Dnle_BackPic: nie_Dnle_BackPic,
@@ -266,12 +266,12 @@ module.exports = {
             const {
                 currentLat,
                 currentLng,
-               
+
 
             } = req.body
             Driver.update({
                 currentLat: currentLat,
-                currentLng: currentLng,               
+                currentLng: currentLng,
             }, {
                 where: {
                     id: driverId
