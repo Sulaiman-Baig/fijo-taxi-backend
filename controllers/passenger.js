@@ -237,7 +237,8 @@ module.exports = {
                         pass: 'fijotaxi2020'
                     }
                 });
-                var rand = Math.floor(Math.random() * 100);
+                var rand = Math.floor(100000 + Math.random() * 900000);
+                
                 var mailOptions = {
                     from: ' ', // sender address
                     to: passengermail, // list of receivers
