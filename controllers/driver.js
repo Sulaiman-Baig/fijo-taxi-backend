@@ -3,6 +3,7 @@ const hashedpassword = require("password-hash");
 const sequelize = require("sequelize");
 const op = sequelize.Op;
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const {
     Driver
@@ -306,6 +307,75 @@ module.exports = {
                 message: "Error Occurd in Fetching All drivers"
             });
         }
+    },
+
+    async updatePassword(req, res, next) {
+        try {
+            id = req.params.id;
+            const {
+                password
+            } = req.body
+
+            Driver.update({
+                password: hashedpassword.generate(password)
+            }, {
+                where: {
+                    id: id
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "An error updatePassword"
+            })
+        }
+    },
+
+    async forgotPassword(req, res, next) {
+        const reqData = req.body;
+        Driver.findOne({
+            where: { email: reqData.email }
+        }).then(isDriver => {
+            if (isDriver) {
+                // send email
+                var drivermail = req.body.email;
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'fijotaxi@gmail.com',
+                        pass: 'fijotaxi2020'
+                    }
+                });
+                var rand = Math.floor(Math.random() * 100);
+                var mailOptions = {
+                    from: ' ', // sender address
+                    to: drivermail, // list of receivers
+                    subject: 'Driver Password Verification Code', // Subject line
+                    text: 'Here is a code to setup your password again', // plain text body
+                    html: 'Hi Dear Driver <br>Please verify your email using the link below and get back your password! <b style="font-size:24px;margin-left:30px"> Your code - ' + (isDriver.id) * rand + '<b>' // html body
+
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                        res.json('error occured')
+                    } else {
+                        res.json({
+                            driver: isDriver,
+                            verificationCode: (isDriver.id) * rand
+                        });
+                    }
+                });
+
+            } else {
+                res.json({ message: "Email does not exit" });
+            }
+        }).catch(err => {
+            console.log(err);
+            res.json("Some Error Occured!");
+        });
     },
 
 };

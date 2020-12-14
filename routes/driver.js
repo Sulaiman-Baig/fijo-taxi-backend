@@ -13,6 +13,8 @@ router.post('/create-driver-bank-details/:driverId', driverController.createDriv
 router.post('/update-current-location/:driverId', driverController.updateCurrentLocation);
 router.get('/get/:driverId', driverController.getbyId);
 router.get('/getall', driverController.getAll);
+router.post('/update-password/:id' , driverController.updatePassword);
+router.post('/forgot-password' , driverController.forgotPassword); // this api can be used for email verification as well but you must comment the purpose where u are using it, it is your resposibility
 
 
 
