@@ -16,6 +16,8 @@ module.exports = (sequelize, type) => {
     city: type.STRING,
     gender: type.STRING,
     profilePhoto: type.STRING,
+    currentLat: type.STRING,
+    currentLng: type.STRING,
   });
 };
 

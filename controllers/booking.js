@@ -127,17 +127,17 @@ module.exports = {
                 if (isWeekend == false && isMorning == true) {
                     if (seatingCapacity >= 5) {
                         //  morning time & seating capacity >= 25
-                        let perKmPrice = (1.09 + 2.0 + 1.5);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.09 * km);
+                        let estimatedPrice = (perKmPrice + 2.0 + 1.5);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.0 });
 
                     } else {
                         // morning time & seating capacity is other than >= 25
-                        let perKmPrice = (1.09 + 2.0);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.09 * km);
+                        let estimatedPrice = (perKmPrice + 2.0);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.0 });
                     }
                 }
             }
@@ -145,17 +145,17 @@ module.exports = {
                 if (isWeekend == false && isMorning == true) {
                     if (seatingCapacity >= 5) {
                         //  morning time & seating capacity >= 25
-                        let perKmPrice = (1.20 + 2.0 + 1.5);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.20 * km);
+                        let estimatedPrice = (perKmPrice + 2.0 + 1.5);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.0 });
 
                     } else {
                         // morning time & seating capacity is other than >= 25
-                        let perKmPrice = (1.20 + 2.0);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.20 * km);
+                        let estimatedPrice = (perKmPrice + 2.0);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.0 });
                     }
                 }
             }
@@ -166,17 +166,17 @@ module.exports = {
                 if (isMorning == false) {
                     if (seatingCapacity >= 5) {
                         //  night time & seating capacity >= 25
-                        let perKmPrice = (1.19 + 2.5 + 2);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.19 * km);
+                        let estimatedPrice = (perKmPrice + 2.5 + 2);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.5 });
 
                     } else {
                         // night time & seating capacity is other than >= 25
-                        let perKmPrice = (1.19 + 2.5);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.19 * km);
+                        let estimatedPrice = (perKmPrice + 2.5);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.5 });
                     }
                 }
             }
@@ -184,17 +184,17 @@ module.exports = {
                 if (isMorning == false) {
                     if (seatingCapacity >= 5) {
                         //  night time & seating capacity >= 25
-                        let perKmPrice = (1.40 + 2.5 + 2);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.40 * km);
+                        let estimatedPrice = (perKmPrice + 2.5 + 2);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.5 });
 
                     } else {
                         // night time & seating capacity is other than >= 25
-                        let perKmPrice = (1.40 + 2.5);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.40 * km);
+                        let estimatedPrice = (perKmPrice + 2.5);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.5 });
                     }
                 }
             }
@@ -205,17 +205,17 @@ module.exports = {
                 if (isWeekend == true && isMorning == true) {
                     if (seatingCapacity >= 5) {
                         //  day time + weekend & seating capacity >= 25
-                        let perKmPrice = (1.19 + 2.0 + 2.0);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.19 * km);
+                        let estimatedPrice = (perKmPrice + 2.0 + 2.0);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.5 });
 
                     } else {
                         // day time + weekend & seating capacity is other than >= 25
-                        let perKmPrice = (1.19 + 2.5);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.19 * km);
+                        let estimatedPrice = (perKmPrice + 2.5);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.5 });
                     }
                 }
             }
@@ -223,21 +223,39 @@ module.exports = {
                 if (isWeekend == true && isMorning == true) {
                     if (seatingCapacity >= 5) {
                         //  day time + weekend & seating capacity >= 25
-                        let perKmPrice = (1.40 + 2.0 + 2.0);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.40 * km);
+                        let estimatedPrice = (perKmPrice + 2.0 + 2.0);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.0 });
 
                     } else {
                         // day time + weekend & seating capacity is other than >= 25
-                        let perKmPrice = (1.40 + 2.5);
-                        let estimatedPrice = (perKmPrice * km);
+                        let perKmPrice = (1.40 * 2.5);
+                        let estimatedPrice = (perKmPrice + 2.5);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ exactPrice: price });
+                        res.json({ totalPrice: price, basePrice: 2.0 });
                     }
                 }
             }
             // day time + weekend ends
+
+            // short distance & morning time starts
+            if (km < 3 && isWeekend == false && isMorning == true) {
+                res.json({ totalPrice: 4 });
+            }
+            // short distance & morning time ends
+
+            // short distance & morning time & weekend starts
+            if (km < 3 && isWeekend == true && isMorning == true) {
+                res.json({ totalPrice: 6 });
+            }
+            // short distance & morning time & weekend ends
+
+            // short distance & night time starts
+            if (km < 3 && isMorning == true) {
+                res.json({ totalPrice: 4 });
+            }
+            // short distance & night time ends
 
 
             const bookings = await Booking.findAll();

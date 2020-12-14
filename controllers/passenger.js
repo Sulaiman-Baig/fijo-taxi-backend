@@ -289,4 +289,29 @@ module.exports = {
         }
     },
 
+    async updateCurrentLocation(req, res, next) {
+        try {
+            passengerId = req.params.passengerId;
+            const {
+                currentLat,
+                currentLng,
+            } = req.body
+            Passenger.update({
+                currentLat: currentLat,
+                currentLng: currentLng,
+            }, {
+                where: {
+                    id: passengerId
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured in updateCurrentLocation"
+            })
+        }
+    },
+
 };
