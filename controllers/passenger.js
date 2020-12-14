@@ -234,7 +234,7 @@ module.exports = {
                     service: 'gmail',
                     auth: {
                         user: 'fijotaxi@gmail.com',
-                        pass: 'Juandecelaya@1066'
+                        pass: 'fijotaxi2020'
                     }
                 });
                 var mailOptions = {
@@ -248,6 +248,7 @@ module.exports = {
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
                         console.log(error);
+                        res.json('error occured')
                     } else {
                         res.json({
                             passenger: isPassenger,
