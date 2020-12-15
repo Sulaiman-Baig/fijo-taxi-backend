@@ -12,6 +12,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-force-ssl": "^0.3.2",
+    "geodist": "^0.2.1",
     "http-errors": "~1.6.3",
     "http-status-codes": "^2.1.4",
     "jsonwebtoken": "^8.5.1",

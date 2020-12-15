@@ -19,7 +19,7 @@ module.exports = {
                 lisenceNumber,
                 lisencePhoto
             } = req.body;
-
+       
             const vehicle = await Vehicle.create({
                 brand: brand,
                 vehiclePhoto: vehiclePhoto,
@@ -92,6 +92,19 @@ module.exports = {
         catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getVehicle"
+            });
+        }
+    },
+
+    async getVehicleByDriver(req, res, next) {
+        try {
+            const driverId = req.params.driverId;
+            const vehicle = await Vehicle.findOne({ where: { driverId: driverId } });
+            return res.status(http_status_codes.OK).json({vehicleByDriver: vehicle});
+        }
+        catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching getVehicleByDriver"
             });
         }
     },

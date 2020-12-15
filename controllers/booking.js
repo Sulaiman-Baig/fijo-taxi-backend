@@ -1,11 +1,13 @@
 const { RequestHeaderFieldsTooLarge } = require('http-errors');
 const http_status_codes = require('http-status-codes');
 const sequelize = require("sequelize");
+var geodist = require('geodist');
 const op = sequelize.Op;
 const {
     Booking,
     Driver,
-    Comission
+    Vehicle
+
 } = require('../database/database');
 
 module.exports = {
@@ -121,6 +123,8 @@ module.exports = {
                 isAirport,
                 seatingCapacity
             } = req.body;
+
+
 
             // morning time starts
             if (km < 25) {
@@ -263,6 +267,91 @@ module.exports = {
         } catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getAllBookings"
+            });
+        }
+    },
+
+
+
+    async findNearByDrivers(req, res, next) {
+        try {
+            const {
+                noOfSeating,
+                vehicleType,
+                city,
+                currentLat,
+                currentLng,
+                searchInKM,
+                paymentVia,
+                passengerObj,
+                origin,
+                destination,
+                estTime,
+                totalKM
+            } = req.body;
+
+            const drivers = await Driver.findAll(
+                {
+                    where: {
+                        [op.and]:
+                            [
+                                { diverAvailablity: true },
+                                { city: city }
+                            ]
+                    },
+                    include: [
+                        {
+                            model: Vehicle,
+                            where: {
+                                [op.and]:
+                                    [
+                                        { noOfSeating: noOfSeating },
+                                        { vehicleType: vehicleType }
+                                    ]
+                            },
+                        }
+                    ]
+                }
+            );
+
+            if (drivers.lenght !== 0) {
+                var passengerCurrentLocation = {
+                    lat: currentLat,
+                    lon: currentLng
+                };
+
+                await drivers.forEach(async driver => {
+                    var isNearByDriverLocation = {
+                        lat: driver.currentLat,
+                        lon: driver.currentLng
+                    };
+
+                    var dist = geodist(passengerCurrentLocation, isNearByDriverLocation, {
+                        format: true,
+                        unit: 'meters'
+                    });
+
+                    var distinmeters = dist.substr(0, dist.indexOf(' '));
+                    
+                    if (distinmeters < (searchInKM * 1000)) {
+                        var obj = {
+                            paymentVia: paymentVia,
+                            passengerObj: passengerObj,
+                            origin: origin,
+                            destination: destination,
+                            estTime: estTime,
+                            totalKM: totalKM
+                        }
+                        driversArray.push(obj);
+                    }
+                });
+
+              
+            }
+          
+        } catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching findNearByDrivers"
             });
         }
     },

@@ -9,6 +9,7 @@ router.get('/getall-driver-bookings/:driverId', bookingController.getAllDriverBo
 router.get('/getall-customer-bookings/:customerId', bookingController.getAllCustomerBookings);
 router.get('/getall-bookings', bookingController.getAllBookings);
 router.post('/calculate-estimated-price', bookingController.calculateEstimatedPrice);
+router.post('/find-nearby-drivers', bookingController.findNearByDrivers);
 
 
 module.exports = router;

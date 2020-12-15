@@ -20,14 +20,16 @@ module.exports = (sequelize, type) => {
     nie_Dnle_FrontPic: type.STRING,
     nie_Dnle_BackPic: type.STRING,
     nationality: type.STRING,
-    bankName: type.STRING,
     accountNumber: type.STRING,
     currentLat: type.STRING,
-    currentLng: type.STRING,
-    swiftCode: type.STRING,   
+    currentLng: type.STRING,  
     isApproved: {
       type: type.BOOLEAN,
       defaultValue: false
+    },
+    diverAvailablity: {
+      type: type.BOOLEAN,
+      defaultValue: true
     },
   });
 
