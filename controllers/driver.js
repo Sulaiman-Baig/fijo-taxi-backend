@@ -52,9 +52,7 @@ module.exports = {
                         nie_Dnle_FrontPic: null,
                         nie_Dnle_BackPic: null,
                         nationality: null,
-                        bankName: null,
                         accountNumber: null,
-                        swiftCode: null,
                         isApproved: false
                     })
                         .then((driver) => {
@@ -185,9 +183,7 @@ module.exports = {
                 nie_Dnle_FrontPic,
                 nie_Dnle_BackPic,
                 nationality,
-                bankName,
                 accountNumber,
-                swiftCode,
 
             } = req.body
             Driver.update({
@@ -204,9 +200,7 @@ module.exports = {
                 nie_Dnle_FrontPic: nie_Dnle_FrontPic,
                 nie_Dnle_BackPic: nie_Dnle_BackPic,
                 nationality: nationality,
-                bankName: bankName,
-                accountNumber: accountNumber,
-                swiftCode: swiftCode,
+                accountNumber: accountNumber
             }, {
                 where: {
                     id: driverId
@@ -230,9 +224,7 @@ module.exports = {
                 nie_Dnle_FrontPic,
                 nie_Dnle_BackPic,
                 nationality,
-                bankName,
-                accountNumber,
-                swiftCode,
+                accountNumber
 
             } = req.body
             Driver.update({
@@ -241,9 +233,7 @@ module.exports = {
                 nie_Dnle_FrontPic: nie_Dnle_FrontPic,
                 nie_Dnle_BackPic: nie_Dnle_BackPic,
                 nationality: nationality,
-                bankName: bankName,
-                accountNumber: accountNumber,
-                swiftCode: swiftCode,
+                accountNumber: accountNumber
             }, {
                 where: {
                     id: driverId

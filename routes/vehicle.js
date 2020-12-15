@@ -7,7 +7,7 @@ router.post('/create/:driverId', vehicleController.createVehicle );
 router.post('/update/:id', vehicleController.updateVehicle );
 router.post('/delete/:id', vehicleController.deleteVehicle );
 router.get('/get/:id', vehicleController.getVehicle );
-router.get('/get/:driverId', vehicleController.getVehicleByDriver );
+router.get('/get-by-driver/:driverId', vehicleController.getVehicleByDriver );
 router.get('/getall', vehicleController.getAllVehicles );
 
 
