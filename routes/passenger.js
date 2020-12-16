@@ -7,6 +7,7 @@ const isAuth = require('../middleware/check-auth');
 router.post('/signup', passengerController.createPassenger);
 router.post('/signin', passengerController.signinPassenger);
 router.post('/update/:passengerId', passengerController.updatePassenger);
+router.post('/change-passenger-availabiliy-status/:passengerId', passengerController.changePassengerAvailabiliyStatus);
 router.get('/get/:passengerId', passengerController.getbyId);
 router.get('/getall', passengerController.getAll);
 router.post('/update-current-location/:passengerId', passengerController.updateCurrentLocation);

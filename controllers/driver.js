@@ -216,6 +216,29 @@ module.exports = {
         }
     },
 
+    async changeDriverAvailabiliyStatus(req, res, next) {
+        try {
+            driverId = req.params.driverId;
+            const {
+                isAvailable
+            } = req.body
+            Driver.update({
+                diverAvailablity: isAvailable
+            }, {
+                where: {
+                    id: driverId
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured in changeDriverAvailabiliyStatus"
+            })
+        }
+    },
+
     async createDriverBankDetails(req, res, next) {
         try {
             driverId = req.params.driverId;

@@ -9,6 +9,7 @@ router.post('/signin', driverController.signinDriver);
 router.get('/approve-driver/:driverId', driverController.approveDriver);
 router.get('/dis-approve-driver/:driverId', driverController.disApproveDriver);
 router.post('/update/:driverId', driverController.updateDriver);
+router.post('/change-driver-availabiliy-status/:driverId', driverController.changeDriverAvailabiliyStatus);
 router.post('/create-driver-bank-details/:driverId', driverController.createDriverBankDetails);
 router.post('/update-current-location/:driverId', driverController.updateCurrentLocation);
 router.get('/get/:driverId', driverController.getbyId);

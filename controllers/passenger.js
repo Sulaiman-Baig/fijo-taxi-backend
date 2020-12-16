@@ -155,6 +155,29 @@ module.exports = {
         }
     },
 
+    async changePassengerAvailabiliyStatus(req, res, next) {
+        try {
+            passengerId = req.params.passengerId;
+            const {
+                isAvailable
+            } = req.body
+            Passenger.update({
+                diverAvailablity: isAvailable
+            }, {
+                where: {
+                    id: passengerId
+                }
+            })
+            return res.status(http_status_codes.OK).json({
+                message: "Updated sussessfully"
+            })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured in changePassengerAvailabiliyStatus"
+            })
+        }
+    },
+
     async findPassengerByEmail(req, res, next) {
         try {
             const {

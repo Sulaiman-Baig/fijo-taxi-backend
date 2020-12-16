@@ -4,10 +4,10 @@ module.exports = function (io) {
         socket.on('send-data-to-drivers', data => {
 
             data.forEach(element => {
-                io.emit(element.driverId, element);
+                io.emit('receive-data-of-driver' + element.driverId, element);
             });
             console.log('socket is listening to send-data-to-drivers');
             console.log(data);
-        });
-    })
+        }); 
+    });
 }

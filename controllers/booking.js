@@ -290,9 +290,10 @@ module.exports = {
                 origin,
                 destination,
                 estTime,
-                totalKM
+                totalKM,
+                exactPriceForDriver
             } = req.body;
-            
+
             const drivers = await Driver.findAll(
                 {
                     where: {
@@ -316,13 +317,24 @@ module.exports = {
                     ]
                 }
             );
-            res.json(drivers);
+
 
             if (drivers.lenght !== 0) {
                 var passengerCurrentLocation = {
                     lat: currentLat,
                     lon: currentLng
                 };
+
+                var objFromRequest = {
+                    paymentVia: paymentVia,
+                    passengerObj: passengerObj,
+                    origin: origin,
+                    destination: destination,
+                    estTime: estTime,
+                    totalKM: totalKM,
+                    exactPriceForDriver: exactPriceForDriver,
+
+                }
 
                 await drivers.forEach(async driver => {
                     var isNearByDriverLocation = {
@@ -339,21 +351,17 @@ module.exports = {
 
                     if (distinmeters < (searchInKM * 1000)) {
                         var obj = {
-                            paymentVia: paymentVia,
-                            passengerObj: passengerObj,
-                            origin: origin,
-                            destination: destination,
-                            estTime: estTime,
-                            totalKM: totalKM,
+
                             driverId: driver.id
                         }
+
                         driversArray.push(obj);
                     }
                 });
                 if (driversArray.lenght !== 0) {
 
                     return res.status(http_status_codes.OK).json(
-                        driversArray
+                        { driversIds: driversArray, objFromRequest: objFromRequest }
                     );
 
                 } else {
