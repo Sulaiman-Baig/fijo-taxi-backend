@@ -24,6 +24,7 @@
     "password-hash": "^1.2.2",
     "save": "^2.4.0",
     "sequelize": "^6.3.5",
+    "socket.io": "^2.3.0",
     "stripe": "^8.120.0"
   }
 }

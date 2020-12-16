@@ -344,7 +344,7 @@ module.exports = {
                     to: drivermail, // list of receivers
                     subject: 'Driver Password Verification Code', // Subject line
                     text: 'Here is a code to setup your password again', // plain text body
-                    html: 'Hi Dear Driver <br>Please verify your email using the link below and get back your password! <b style="font-size:24px;margin-left:30px"> Your code - ' + (isDriver.id) * rand + '<b>' // html body
+                    html: 'Hi Dear Driver <br>Please verify your email using the link below and get back your password! <b style="font-size:24px;margin-left:30px"> Your code - ' +  rand + '<b>' // html body
 
                 };
                 transporter.sendMail(mailOptions, function (error, info) {
@@ -354,7 +354,7 @@ module.exports = {
                     } else {
                         res.json({
                             driver: isDriver,
-                            verificationCode: (isDriver.id) * rand
+                            verificationCode: rand
                         });
                     }
                 });

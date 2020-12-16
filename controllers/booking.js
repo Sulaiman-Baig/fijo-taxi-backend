@@ -123,9 +123,6 @@ module.exports = {
                 isAirport,
                 seatingCapacity
             } = req.body;
-
-
-
             // morning time starts
             if (km < 25) {
                 if (isWeekend == false && isMorning == true) {
@@ -134,7 +131,12 @@ module.exports = {
                         let perKmPrice = (1.09 * km);
                         let estimatedPrice = (perKmPrice + 2.0 + 1.5);
                         const price = Math.ceil(estimatedPrice);
-                        res.json({ totalPrice: price, basePrice: 2.0 });
+                        if (isAirport == true) {
+
+                        } else {
+                            res.json({ totalPrice: price, basePrice: 2.0 }); // airportkr rha tha ma tb tk
+                        }
+
 
                     } else {
                         // morning time & seating capacity is other than >= 25
@@ -275,6 +277,7 @@ module.exports = {
 
     async findNearByDrivers(req, res, next) {
         try {
+            driversArray = [];
             const {
                 noOfSeating,
                 vehicleType,
@@ -289,7 +292,7 @@ module.exports = {
                 estTime,
                 totalKM
             } = req.body;
-
+            
             const drivers = await Driver.findAll(
                 {
                     where: {
@@ -332,7 +335,7 @@ module.exports = {
                     });
 
                     var distinmeters = dist.substr(0, dist.indexOf(' '));
-                    
+
                     if (distinmeters < (searchInKM * 1000)) {
                         var obj = {
                             paymentVia: paymentVia,
@@ -340,15 +343,29 @@ module.exports = {
                             origin: origin,
                             destination: destination,
                             estTime: estTime,
-                            totalKM: totalKM
+                            totalKM: totalKM,
+                            driverId: driver.id
                         }
                         driversArray.push(obj);
                     }
                 });
+                if (driversArray.lenght !== 0) {
 
-              
+                    return res.status(http_status_codes.NOT_FOUND).json(
+                        driversArray
+                    );
+
+                } else {
+                    return res.status(http_status_codes.NOT_FOUND).json({
+                        errors: 'Oooops! No Near By Driver is Found!'
+                    });
+                }
+            } else {
+                return res.status(http_status_codes.NOT_FOUND).json({
+                    errors: 'No Driver Registered yet!'
+                });
             }
-          
+
         } catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching findNearByDrivers"

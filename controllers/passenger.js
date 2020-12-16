@@ -244,7 +244,7 @@ module.exports = {
                     to: passengermail, // list of receivers
                     subject: 'Passenger Password Verification Code', // Subject line
                     text: 'Here is a code to setup your password again', // plain text body
-                    html: 'Hi Dear Passenger <br>Please verify your email using the link below and get back your password! <b style="font-size:24px;margin-left:30px"> Your code - ' + (isPassenger.id) * rand + '<b>' // html body
+                    html: 'Hi Dear Passenger <br>Please verify your email using the link below and get back your password! <b style="font-size:24px;margin-left:30px"> Your code - ' + rand + '<b>' // html body
 
                 };
                 transporter.sendMail(mailOptions, function (error, info) {
@@ -254,7 +254,7 @@ module.exports = {
                     } else {
                         res.json({
                             passenger: isPassenger,
-                            verificationCode: (isPassenger.id) * rand
+                            verificationCode:  rand
                         });
                     }
                 });
