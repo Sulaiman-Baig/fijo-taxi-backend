@@ -316,6 +316,7 @@ module.exports = {
                     ]
                 }
             );
+            res.json(drivers);
 
             if (drivers.lenght !== 0) {
                 var passengerCurrentLocation = {
@@ -351,7 +352,7 @@ module.exports = {
                 });
                 if (driversArray.lenght !== 0) {
 
-                    return res.status(http_status_codes.NOT_FOUND).json(
+                    return res.status(http_status_codes.OK).json(
                         driversArray
                     );
 
