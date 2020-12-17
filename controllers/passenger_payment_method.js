@@ -88,6 +88,19 @@ module.exports = {
         }
     },
 
+    async getAllPassengerPaymentMethodsByPassenger(req, res, next) {
+        try {   
+            passengerId = req.params.passengerId;            
+            const passengerPaymentMethod = await PassengerPaymentMethod.findAll({where: {passengerId: passengerId}});
+            return res.status(http_status_codes.OK).json(passengerPaymentMethod);
+        } 
+        catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching All getAllPassengerPaymentMethodsByPassenger"
+            });
+        }
+    },
+
 
     async deletePassengerPaymentMethod(req, res, next) {
         try {    

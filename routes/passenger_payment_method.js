@@ -8,6 +8,7 @@ router.post('/update/:passengerPaymentMethodId', passengerPaymentMethodControlle
 router.post('/delete/:passengerPaymentMethodId', passengerPaymentMethodController.deletePassengerPaymentMethod );
 router.get('/get/:passengerPaymentMethodId', passengerPaymentMethodController.getPassengerPaymentMethod );
 router.get('/getall', passengerPaymentMethodController.getAllPassengerPaymentMethods );
+router.get('/getall-by-passenger/:passengerId', passengerPaymentMethodController.getAllPassengerPaymentMethodsByPassenger );
 
 
 
