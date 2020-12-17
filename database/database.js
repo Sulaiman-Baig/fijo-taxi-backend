@@ -10,6 +10,7 @@ const ConversationModel = require("../models/conversation");
 const DriverModel = require("../models/driver");
 const MessageModel = require("../models/message");
 const PassengerModel = require("../models/passenger");
+const PassengerPaymentMethodModel = require("../models/passenger_payment_method");
 const SavedLocationModel = require("../models/saved_location");
 const VehicleModel = require("../models/vehicle");
 const WithdrawModel = require("../models/withdraw");
@@ -38,6 +39,7 @@ const Chat = ChatModel(sequelize, Sequelize);
 const Conversation = ConversationModel(sequelize, Sequelize);
 const Driver = DriverModel(sequelize, Sequelize);
 const Passenger = PassengerModel(sequelize, Sequelize);
+const PassengerPaymentMethod = PassengerPaymentMethodModel(sequelize, Sequelize);
 const SavedLocation = SavedLocationModel(sequelize, Sequelize);
 const Message = MessageModel(sequelize, Sequelize);
 const Vehicle = VehicleModel(sequelize, Sequelize);
@@ -57,6 +59,9 @@ Driver.hasMany(Booking);
 
 Booking.belongsTo(Passenger);
 Passenger.hasMany(Booking);
+
+PassengerPaymentMethod.belongsTo(Passenger);
+Passenger.hasMany(PassengerPaymentMethod);
 
 Vehicle.belongsTo(Driver);
 Driver.hasMany(Vehicle);
@@ -91,6 +96,7 @@ module.exports = {
     Driver,
     Message,
     Passenger,
+    PassengerPaymentMethod,
     SavedLocation,
     Vehicle,
     Withdraw

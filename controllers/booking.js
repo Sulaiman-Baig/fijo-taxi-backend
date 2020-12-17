@@ -319,7 +319,7 @@ module.exports = {
             );
 
 
-            if (drivers.lenght !== 0) {
+            if (drivers.length !== 0) {
                 var passengerCurrentLocation = {
                     lat: currentLat,
                     lon: currentLng
@@ -358,7 +358,7 @@ module.exports = {
                         driversArray.push(obj);
                     }
                 });
-                if (driversArray.lenght !== 0) {
+                if (driversArray.length !== 0) {
 
                     return res.status(http_status_codes.OK).json(
                         { driversIds: driversArray, objFromRequest: objFromRequest }
