@@ -20,7 +20,8 @@ module.exports = {
                 number: number,
                 expMonth: expMonth,
                 expYear: expYear,
-                cvc: cvc
+                cvc: cvc,
+                passengerId: passengerId
             });
             return res.status(http_status_codes.CREATED).json(passengerPaymentMethod);
         } catch (err) {
