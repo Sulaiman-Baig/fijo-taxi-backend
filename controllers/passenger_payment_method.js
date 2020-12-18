@@ -1,6 +1,6 @@
 const http_status_codes = require('http-status-codes');
 const {
-   
+
     PassengerPaymentMethod
 } = require('../database/database');
 module.exports = {
@@ -11,16 +11,20 @@ module.exports = {
                 number,
                 expMonth,
                 expYear,
-                cvc
-            } = req.body;    
+                cvc,
+                brand,
+                funding
+            } = req.body;
 
-            passengerId = req.params.passengerId; 
+            passengerId = req.params.passengerId;
 
             const passengerPaymentMethod = await PassengerPaymentMethod.create({
                 number: number,
                 expMonth: expMonth,
                 expYear: expYear,
                 cvc: cvc,
+                brand: brand,
+                funding: funding,
                 passengerId: passengerId
             });
             return res.status(http_status_codes.CREATED).json(passengerPaymentMethod);
@@ -37,7 +41,9 @@ module.exports = {
                 number,
                 expMonth,
                 expYear,
-                cvc
+                cvc,
+                brand,
+                funding
             } = req.body;
 
             passengerPaymentMethodId = req.params.passengerPaymentMethodId;
@@ -46,7 +52,9 @@ module.exports = {
                 number: number,
                 expMonth: expMonth,
                 expYear: expYear,
-                cvc: cvc               
+                cvc: cvc,
+                brand: brand,
+                funding: funding,
             }, {
                 where: {
                     id: passengerPaymentMethodId
@@ -55,7 +63,7 @@ module.exports = {
             return res.status(http_status_codes.OK).json({
                 message: 'PassengerPaymentMethod Updated Successfully'
             });
-        } 
+        }
         catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Updating PassengerPaymentMethod"
@@ -66,9 +74,9 @@ module.exports = {
     async getPassengerPaymentMethod(req, res, next) {
         try {
             passengerPaymentMethodId = req.params.passengerPaymentMethodId;
-            const passengerPaymentMethod = await PassengerPaymentMethod.findOne({where: {id: passengerPaymentMethodId }});
+            const passengerPaymentMethod = await PassengerPaymentMethod.findOne({ where: { id: passengerPaymentMethodId } });
             return res.status(http_status_codes.OK).json(passengerPaymentMethod);
-        } 
+        }
         catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching PassengerPaymentMethod"
@@ -77,10 +85,10 @@ module.exports = {
     },
 
     async getAllPassengerPaymentMethods(req, res, next) {
-        try {            
+        try {
             const passengerPaymentMethod = await PassengerPaymentMethod.findAll();
             return res.status(http_status_codes.OK).json(passengerPaymentMethod);
-        } 
+        }
         catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All PassengerPaymentMethod"
@@ -89,11 +97,11 @@ module.exports = {
     },
 
     async getAllPassengerPaymentMethodsByPassenger(req, res, next) {
-        try {   
-            passengerId = req.params.passengerId;            
-            const passengerPaymentMethod = await PassengerPaymentMethod.findAll({where: {passengerId: passengerId}});
+        try {
+            passengerId = req.params.passengerId;
+            const passengerPaymentMethod = await PassengerPaymentMethod.findAll({ where: { passengerId: passengerId } });
             return res.status(http_status_codes.OK).json(passengerPaymentMethod);
-        } 
+        }
         catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All getAllPassengerPaymentMethodsByPassenger"
@@ -103,11 +111,11 @@ module.exports = {
 
 
     async deletePassengerPaymentMethod(req, res, next) {
-        try {    
-            passengerPaymentMethodId = req.params.passengerPaymentMethodId;        
-            const passengerPaymentMethod = await PassengerPaymentMethod.destroy({where: {id: passengerPaymentMethodId}});
-            return res.status(http_status_codes.OK).json({message: 'PassengerPaymentMethod Deleted Successfully'});
-        } 
+        try {
+            passengerPaymentMethodId = req.params.passengerPaymentMethodId;
+            const passengerPaymentMethod = await PassengerPaymentMethod.destroy({ where: { id: passengerPaymentMethodId } });
+            return res.status(http_status_codes.OK).json({ message: 'PassengerPaymentMethod Deleted Successfully' });
+        }
         catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Deleting PassengerPaymentMethod"

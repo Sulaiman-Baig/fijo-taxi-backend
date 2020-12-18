@@ -10,6 +10,8 @@ module.exports = (sequelize, type) => {
         expMonth: type.STRING,
         expYear: type.STRING,
         cvc: type.STRING,
+        brand: type.STRING,
+        funding: type.STRING,
     });
 };
 
