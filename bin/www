@@ -33,6 +33,8 @@ server.on('listening', onListening);
 
 // custom sockets
 require('../socket/booking')(io);
+require('../socket/privatechat')(io);
+
 
 /**
  * Normalize a port into a number, string, or false.
