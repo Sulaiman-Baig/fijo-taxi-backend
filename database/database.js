@@ -7,10 +7,12 @@ const AdminModel = require("../models/admin");
 const BookingModel = require("../models/booking");
 const ChatModel = require("../models/chat");
 const ConversationModel = require("../models/conversation");
+const DiscountCodeModel = require("../models/discount_code");
 const DriverModel = require("../models/driver");
 const MessageModel = require("../models/message");
 const PassengerModel = require("../models/passenger");
 const PassengerPaymentMethodModel = require("../models/passenger_payment_method");
+const PassengerPreferenceModel = require("../models/passenger_prefrences");
 const SavedLocationModel = require("../models/saved_location");
 const VehicleModel = require("../models/vehicle");
 const WithdrawModel = require("../models/withdraw");
@@ -37,9 +39,11 @@ const Admin = AdminModel(sequelize, Sequelize);
 const Booking = BookingModel(sequelize, Sequelize);
 const Chat = ChatModel(sequelize, Sequelize);
 const Conversation = ConversationModel(sequelize, Sequelize);
+const DiscountCode = DiscountCodeModel(sequelize, Sequelize);
 const Driver = DriverModel(sequelize, Sequelize);
 const Passenger = PassengerModel(sequelize, Sequelize);
 const PassengerPaymentMethod = PassengerPaymentMethodModel(sequelize, Sequelize);
+const PassengerPreference = PassengerPreferenceModel(sequelize, Sequelize);
 const SavedLocation = SavedLocationModel(sequelize, Sequelize);
 const Message = MessageModel(sequelize, Sequelize);
 const Vehicle = VehicleModel(sequelize, Sequelize);
@@ -62,6 +66,9 @@ Passenger.hasMany(Booking);
 
 PassengerPaymentMethod.belongsTo(Passenger);
 Passenger.hasMany(PassengerPaymentMethod);
+
+PassengerPreference.belongsTo(Passenger);
+Passenger.hasMany(PassengerPreference);
 
 Vehicle.belongsTo(Driver);
 Driver.hasMany(Vehicle);
@@ -93,10 +100,12 @@ module.exports = {
     Booking,
     Chat,
     Conversation,
+    DiscountCode,
     Driver,
     Message,
     Passenger,
     PassengerPaymentMethod,
+    PassengerPreference,
     SavedLocation,
     Vehicle,
     Withdraw
