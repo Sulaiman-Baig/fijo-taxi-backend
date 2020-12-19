@@ -10,6 +10,11 @@ module.exports = function(io) {
           console.log(data);
         io.to(data.receiver).emit('is_typing', data);
       });
+
+    //   socket.on('refresh', data => {
+    //     console.log(data);
+    //   io.to(data.receiverId).emit('listenchat', data);
+    // });
   
       socket.on('stop_typing', data => {
         io.to(data.receiver).emit('has_stopped_typing', data);

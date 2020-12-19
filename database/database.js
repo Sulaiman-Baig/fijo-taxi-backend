@@ -7,7 +7,6 @@ const AdminModel = require("../models/admin");
 const BookingModel = require("../models/booking");
 const ChatModel = require("../models/chat");
 const ConversationModel = require("../models/conversation");
-const ConversationModel = require("../models/conversation");
 const DiscountCodeModel = require("../models/discount_code");
 const DriverModel = require("../models/driver");
 const MessageModel = require("../models/message");

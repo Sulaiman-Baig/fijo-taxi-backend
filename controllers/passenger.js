@@ -6,7 +6,8 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
 const {
-    Passenger
+    Passenger,
+    PassengerPreference
 } = require('../database/database');
 module.exports = {
 
@@ -50,12 +51,21 @@ module.exports = {
                         city: city
                     })
                         .then((passenger) => {
-                            return res.status(http_status_codes.CREATED).json(
-                                {
-                                    message: 'Passenger is Created Successfully',
-                                    passenger: passenger
-                                }
-                            );
+
+                            PassengerPreference.create({
+                                call: 'Do not call under any circumstances',
+                                airCondition: 'Off',
+                                openDoor: 'No',
+                                conversation: 'I prefer silence'
+                            })
+                                .then(() => {
+                                    return res.status(http_status_codes.CREATED).json(
+                                        {
+                                            message: 'Passenger is Created Successfully',
+                                            passenger: passenger
+                                        }
+                                    );
+                                });
                         });
                 }
             });
@@ -261,7 +271,7 @@ module.exports = {
                     }
                 });
                 var rand = Math.floor(100000 + Math.random() * 900000);
-                
+
                 var mailOptions = {
                     from: ' ', // sender address
                     to: passengermail, // list of receivers
@@ -277,7 +287,7 @@ module.exports = {
                     } else {
                         res.json({
                             passenger: isPassenger,
-                            verificationCode:  rand
+                            verificationCode: rand
                         });
                     }
                 });
