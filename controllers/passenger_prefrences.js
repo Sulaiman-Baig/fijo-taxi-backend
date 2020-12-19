@@ -156,6 +156,19 @@ module.exports = {
         }
     },
 
+    async getPassengerPreferenceByPassenger(req, res, next) {
+        try {
+            passengerId = req.params.passengerId;
+            const passengerPreference = await PassengerPreference.findOne({ where: { passengerId: passengerId } });
+            return res.status(http_status_codes.OK).json(passengerPreference);
+        }
+        catch (err) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching getPassengerPreferenceByPassenger"
+            });
+        }
+    },
+
     async getAllPassengerPreferences(req, res, next) {
         try {
             const passengerPreference = await PassengerPreference.findAll();

@@ -9,6 +9,7 @@ router.post('/update-passengerpreference-aircondition/:passengeId', passengerPre
 router.post('/update-passengerpreference-conversation/:passengeId', passengerPreferenceController.updatePassengerPreferenceConversation );
 router.post('/update-passengerpreference-call/:passengeId', passengerPreferenceController.updatePassengerPreferenceCall );
 router.get('/get/:passengerPreferenceId', passengerPreferenceController.getPassengerPreference );
+router.get('/get/:passengerId', passengerPreferenceController.getPassengerPreferenceByPassenger );
 router.get('/getall', passengerPreferenceController.getAllPassengerPreferences );
 router.post('/delete/:passengerPreferenceId', passengerPreferenceController.deletePassengerPreference );
 
