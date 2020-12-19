@@ -56,7 +56,8 @@ module.exports = {
                                 call: 'Do not call under any circumstances',
                                 airCondition: 'Off',
                                 openDoor: 'No',
-                                conversation: 'I prefer silence'
+                                conversation: 'I prefer silence',
+                                passengerId: passenger.id
                             })
                                 .then(() => {
                                     return res.status(http_status_codes.CREATED).json(
@@ -240,6 +241,21 @@ module.exports = {
         } catch (error) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error occured in fetching single passenger"
+            })
+        }
+    },
+
+    async getAvailabilityStatus(req, res, next) {
+        try {
+            const passenger = await Passenger.findOne({ where: { id: req.params.passengerId } });
+            if (passenger) {
+                return res.status(http_status_codes.OK).json({ isPassengerAvailable: passenger.passengerAvailablity });
+            } else {
+                return res.status(http_status_codes.OK).json({ message: 'Passenger Not Found' });
+            }
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single getAvailabilityStatus"
             })
         }
     },

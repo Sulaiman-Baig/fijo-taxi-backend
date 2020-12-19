@@ -7,7 +7,7 @@ module.exports = (sequelize, type) => {
             required: true
         },
         openDoor: type.STRING,
-        airCondition: type.BOOLEAN,
+        airCondition: type.STRING,
         conversation: type.STRING,
         call: type.STRING
     });

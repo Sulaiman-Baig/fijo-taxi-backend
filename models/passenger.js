@@ -18,7 +18,7 @@ module.exports = (sequelize, type) => {
     profilePhoto: type.STRING,
     currentLat: type.STRING,
     currentLng: type.STRING,
-    diverAvailablity: {
+    passengerAvailablity: {
       type: type.BOOLEAN,
       defaultValue: true
     },

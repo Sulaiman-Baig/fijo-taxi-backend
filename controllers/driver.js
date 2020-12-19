@@ -299,6 +299,21 @@ module.exports = {
         }
     },
 
+    async getAvailabilityStatus(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId } });
+            if (driver) {
+                return res.status(http_status_codes.OK).json({ isDriverAvailable: driver.diverAvailablity });
+            } else {
+                return res.status(http_status_codes.OK).json({ message: 'Driver Not Found' });
+            }
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single getAvailabilityStatus"
+            })
+        }
+    },
+
     async getbyId(req, res, next) {
         try {
             const driver = await Driver.findOne({ where: { id: req.params.driverId } });

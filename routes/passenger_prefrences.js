@@ -4,10 +4,10 @@ const passengerPreferenceController = require('../controllers/passenger_prefrenc
 
 
 router.post('/create/:passengerId', passengerPreferenceController.createPassengerPreference );
-router.post('/update-passengerpreference-opendoor/:passengerPreferenceId', passengerPreferenceController.updatePassengerPreferenceOpenDoor );
-router.post('/update-passengerpreference-aircondition/:passengerPreferenceId', passengerPreferenceController.updatePassengerPreferenceAirCondition );
-router.post('/update-passengerpreference-conversation/:passengerPreferenceId', passengerPreferenceController.updatePassengerPreferenceConversation );
-router.post('/update-passengerpreference-call/:passengerPreferenceId', passengerPreferenceController.updatePassengerPreferenceCall );
+router.post('/update-passengerpreference-opendoor/:passengeId', passengerPreferenceController.updatePassengerPreferenceOpenDoor );
+router.post('/update-passengerpreference-aircondition/:passengeId', passengerPreferenceController.updatePassengerPreferenceAirCondition );
+router.post('/update-passengerpreference-conversation/:passengeId', passengerPreferenceController.updatePassengerPreferenceConversation );
+router.post('/update-passengerpreference-call/:passengeId', passengerPreferenceController.updatePassengerPreferenceCall );
 router.get('/get/:passengerPreferenceId', passengerPreferenceController.getPassengerPreference );
 router.get('/getall', passengerPreferenceController.getAllPassengerPreferences );
 router.post('/delete/:passengerPreferenceId', passengerPreferenceController.deletePassengerPreference );
