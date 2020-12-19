@@ -129,6 +129,38 @@ module.exports = {
         }
     },
 
+    async resetPassword(req, res, next) {
+        try {
+            const passengerId = req.params.id;
+            const oldpassword = req.body.oldpassword;
+            const newpassword = req.body.newpassword;
+            Passenger.findOne({
+                where: { id: passengerId }
+            })
+                .then((isPassenger) => {
+                    const isAuth = hashedpassword.verify(
+                        oldpassword,
+                        isPassenger.password
+                    );
+                    if (isAuth) {
+
+                        isPassenger.update({
+                            password: hashedpassword.generate(newpassword)
+                        })
+                            .then(() => {
+                                res.json({ message: 'Password updated successfully' });
+                            })
+                    } else if (!isAuth) {
+                        res.json({ message: 'Oops Password not updated' });
+                    }
+                })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching All Approved"
+            });
+        }
+    },
+
     async updatePassenger(req, res, next) {
         try {
             passengerId = req.params.passengerId;

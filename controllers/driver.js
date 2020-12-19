@@ -102,7 +102,7 @@ module.exports = {
                             })
                         } else if (isDriverExist.isApproved == false) {
                             res.status(http_status_codes.UNAUTHORIZED).json({
-                                message: 'Sorry, you are not approved by admin yet.'
+                                message: 'Sorry, you are not approved by Admin yet.'
                             });
                         }
                     } else {
@@ -119,6 +119,38 @@ module.exports = {
         } catch (error) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 error: 'error in signinDriver'
+            });
+        }
+    },
+
+    async resetPassword(req, res, next) {
+        try {
+            const driverId = req.params.id;
+            const oldpassword = req.body.oldpassword;
+            const newpassword = req.body.newpassword;
+            Driver.findOne({
+                where: { id: driverId }
+            })
+                .then((isDriver) => {
+                    const isAuth = hashedpassword.verify(
+                        oldpassword,
+                        isDriver.password
+                    );
+                    if (isAuth) {
+
+                        isDriver.update({
+                            password: hashedpassword.generate(newpassword)
+                        })
+                            .then(() => {
+                                res.json({ message: 'Password updated successfully' });
+                            })
+                    } else if (!isAuth) {
+                        res.json({ message: 'Oops Password not updated' });
+                    }
+                })
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching All Approved"
             });
         }
     },
