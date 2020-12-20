@@ -53,7 +53,12 @@ module.exports = {
                 pickup,
                 destination,
                 driverId,
-                passengerId
+                passengerId,
+                status,
+                cancellReason,
+                totalCost,
+                exactPriceForDriver,
+                exactPriceForPassenger
             } = req.body;
 
             const booking = await Booking.create({
@@ -61,7 +66,12 @@ module.exports = {
                 pickup: pickup,
                 destination: destination,
                 driverId: driverId,
-                passengerId: passengerId
+                passengerId: passengerId,
+                status: status,
+                cancellReason: cancellReason,
+                totalCost: totalCost,
+                exactPriceForDriver: exactPriceForDriver,
+                exactPriceForPassenger: exactPriceForPassenger
             });
 
             // if (booking) {

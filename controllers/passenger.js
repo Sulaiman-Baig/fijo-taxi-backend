@@ -206,7 +206,7 @@ module.exports = {
                 isAvailable
             } = req.body
             Passenger.update({
-                diverAvailablity: isAvailable
+                passengerAvailablity: isAvailable
             }, {
                 where: {
                     id: passengerId

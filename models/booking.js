@@ -9,6 +9,11 @@ module.exports = (sequelize, type) => {
         amount: type.STRING,
         pickup: type.STRING,
         destination: type.STRING,
+        status: type.STRING,
+        cancellReason: type.STRING,
+        totalCost: type.STRING,
+        exactPriceForDriver: type.INTEGER,
+        exactPriceForPassenger: type.INTEGER,
     });
 };
 

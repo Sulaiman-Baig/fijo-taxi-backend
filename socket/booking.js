@@ -12,5 +12,21 @@ module.exports = function (io) {
             console.log(data)
             io.emit('receive-driver' + data.passengerId, data);
         });
+        
+        // For canncel ride
+        socket.on('cancelRide', data => {
+            console.log(data, '------------cancel------------')
+            io.emit('isCancel' + data.receiverId, data);
+        });
+        // For Start ride
+        socket.on('startRide', data => {
+            console.log(data, '------------start------------')
+            io.emit('isStarted' + data.receiverId, data);
+        });
+        // For End ride
+        socket.on('endRide', data => {
+            console.log(data, '------------end------------')
+            io.emit('isEnded' + data.receiverId, data);
+        });
     });
 }

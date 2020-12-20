@@ -57,7 +57,7 @@ module.exports = {
                 openDoor: openDoor
             }, {
                 where: {
-                    id: passengeId
+                    passengeId: passengeId
                 }
             });
             return res.status(http_status_codes.OK).json({
@@ -81,7 +81,7 @@ module.exports = {
                 airCondition: airCondition
             }, {
                 where: {
-                    id: passengeId
+                    passengeId: passengeId
                 }
             });
             return res.status(http_status_codes.OK).json({
@@ -105,7 +105,7 @@ module.exports = {
                 conversation: conversation
             }, {
                 where: {
-                    id: passengeId
+                    passengeId: passengeId
                 }
             });
             return res.status(http_status_codes.OK).json({
@@ -129,7 +129,7 @@ module.exports = {
                 call: call
             }, {
                 where: {
-                    id: passengeId
+                    passengeId: passengeId
                 }
             });
             return res.status(http_status_codes.OK).json({
