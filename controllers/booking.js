@@ -1,12 +1,14 @@
 const { RequestHeaderFieldsTooLarge } = require('http-errors');
 const http_status_codes = require('http-status-codes');
 const sequelize = require("sequelize");
-var geodist = require('geodist');
 const op = sequelize.Op;
+var geodist = require('geodist');
 const {
     Booking,
     Driver,
-    Vehicle
+    Vehicle,
+    Message,
+    Conversation
 
 } = require('../database/database');
 
@@ -49,7 +51,6 @@ module.exports = {
     async createBooking(req, res, next) {
         try {
             const {
-                cost,
                 pickup,
                 destination,
                 driverId,
@@ -58,11 +59,13 @@ module.exports = {
                 cancellReason,
                 totalCost,
                 exactPriceForDriver,
-                exactPriceForPassenger
+                exactPriceForPassenger,
+                paymentVia,
+                screenShot,
             } = req.body;
 
             const booking = await Booking.create({
-                cost: cost,
+                screenShot: screenShot,
                 pickup: pickup,
                 destination: destination,
                 driverId: driverId,
@@ -71,19 +74,47 @@ module.exports = {
                 cancellReason: cancellReason,
                 totalCost: totalCost,
                 exactPriceForDriver: exactPriceForDriver,
-                exactPriceForPassenger: exactPriceForPassenger
+                exactPriceForPassenger: exactPriceForPassenger,
+                paymentVia: paymentVia
             });
 
-            // if (booking) {
-            //     const comissions = await Comission.findAll();
-            //     const driver = await Driver.findOne({ where: { id: driverId } });
-            //     let balanceToUpdate = driver.balance + (booking.cost * comissions[0].customerComissionRate);
-            //     driver.update({
-            //         balance: balanceToUpdate
-            //     });
-            //     return res.status(http_status_codes.CREATED).json({ message: 'Booking Created Successfully' });
-            // }
+            if (booking) {
 
+                const isConExist = await Conversation.findOne({
+                    where: {
+                        [op.or]:
+                            [{
+                                [op.and]:
+                                    [{ senderId: passengerId },
+                                    { receiverId: driverId }]
+                            },
+                            {
+                                [op.and]:
+                                    [{ senderId: driverId },
+                                    { receiverId: passengerId }]
+                            }]
+                    }
+                });
+                if (isConExist) {
+                    await Message.destroy({ where: { conversationId: isConExist.id } });
+                    await Conversation.destroy({ where: { id: isConExist.id } });
+                }
+
+                if (paymentVia === 'card' && status === 'completed') {
+                    
+                    const driver = await Driver.findOne({ where: { id: driverId } });
+                    if (driver) {
+                        Driver.update({
+                            balance: (exactPriceForDriver + driver.balance)
+                        }, {
+                            where: {
+                                id: driverId
+                            }
+                        });
+                    }
+                }
+            }
+            return res.status(http_status_codes.OK).json({ message: 'Booking Created Successfully' });
         } catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating Booking"
@@ -301,7 +332,8 @@ module.exports = {
                 destination,
                 estTime,
                 totalKM,
-                exactPriceForDriver
+                exactPriceForDriver,
+                exactPriceForPassenger
             } = req.body;
 
             const drivers = await Driver.findAll(
@@ -343,6 +375,7 @@ module.exports = {
                     estTime: estTime,
                     totalKM: totalKM,
                     exactPriceForDriver: exactPriceForDriver,
+                    exactPriceForPassenger: exactPriceForPassenger
 
                 }
 

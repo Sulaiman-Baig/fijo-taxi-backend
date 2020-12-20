@@ -8,6 +8,7 @@ const BookingModel = require("../models/booking");
 const ChatModel = require("../models/chat");
 const ConversationModel = require("../models/conversation");
 const DiscountCodeModel = require("../models/discount_code");
+const FavoriteDriverModel = require("../models/favorite_drivers");
 const DriverModel = require("../models/driver");
 const MessageModel = require("../models/message");
 const PassengerModel = require("../models/passenger");
@@ -41,6 +42,7 @@ const Chat = ChatModel(sequelize, Sequelize);
 const Conversation = ConversationModel(sequelize, Sequelize);
 const DiscountCode = DiscountCodeModel(sequelize, Sequelize);
 const Driver = DriverModel(sequelize, Sequelize);
+const FavoriteDriver = FavoriteDriverModel(sequelize, Sequelize);
 const Passenger = PassengerModel(sequelize, Sequelize);
 const PassengerPaymentMethod = PassengerPaymentMethodModel(sequelize, Sequelize);
 const PassengerPreference = PassengerPreferenceModel(sequelize, Sequelize);
@@ -60,6 +62,12 @@ Driver.hasMany(Withdraw);
 
 Booking.belongsTo(Driver);
 Driver.hasMany(Booking);
+
+FavoriteDriver.belongsTo(Driver);
+Driver.hasMany(FavoriteDriver);
+
+FavoriteDriver.belongsTo(Passenger);
+Passenger.hasMany(FavoriteDriver);
 
 Booking.belongsTo(Passenger);
 Passenger.hasMany(Booking);
@@ -102,6 +110,7 @@ module.exports = {
     Conversation,
     DiscountCode,
     Driver,
+    FavoriteDriver,
     Message,
     Passenger,
     PassengerPaymentMethod,

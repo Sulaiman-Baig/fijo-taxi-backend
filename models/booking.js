@@ -12,8 +12,9 @@ module.exports = (sequelize, type) => {
         status: type.STRING,
         cancellReason: type.STRING,
         totalCost: type.STRING,
+        paymentVia: type.STRING,
+        screenShot: type.STRING,
         exactPriceForDriver: type.INTEGER,
         exactPriceForPassenger: type.INTEGER,
     });
 };
-

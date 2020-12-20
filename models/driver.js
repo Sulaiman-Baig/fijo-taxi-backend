@@ -22,7 +22,15 @@ module.exports = (sequelize, type) => {
     nationality: type.STRING,
     accountNumber: type.STRING,
     currentLat: type.STRING,
-    currentLng: type.STRING,  
+    currentLng: type.STRING,
+    rating: {
+      type: type.INTEGER,
+      defaultValue: 0
+    },
+    balance: {
+      type: type.INTEGER,
+      defaultValue: 0
+    },
     isApproved: {
       type: type.BOOLEAN,
       defaultValue: false
@@ -32,7 +40,5 @@ module.exports = (sequelize, type) => {
       defaultValue: true
     },
   });
-
-
 };
 
