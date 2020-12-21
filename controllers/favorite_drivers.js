@@ -11,12 +11,26 @@ module.exports = {
                 driverId,
                 passengerId
             } = req.body;
+            const isFavoriteDriverExist = await FavoriteDriver.findOne({ where: { passengerId: passengerId } });
 
-            const favoriteDriver = await FavoriteDriver.create({
-                driverId: driverId,
-                passengerId: passengerId
-            });
-            return res.status(http_status_codes.CREATED).json(favoriteDriver);
+            if (isFavoriteDriverExist) {
+                const driver = await FavoriteDriver.update({
+                    driverId: driverId,
+                    passengerId: passengerId
+                }, {
+                    where: {
+                        id: isFavoriteDriverExist.id
+                    }
+                });
+                return res.status(http_status_codes.CREATED).json({ message: 'FavoriteDriver is updated successfully because it exists already' });
+            } else {
+                const favoriteDriver = await FavoriteDriver.create({
+                    driverId: driverId,
+                    passengerId: passengerId
+                });
+                return res.status(http_status_codes.CREATED).json(favoriteDriver);
+            }          
+            
         } catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating createFavoriteDriver"
