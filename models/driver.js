@@ -23,8 +23,12 @@ module.exports = (sequelize, type) => {
     accountNumber: type.STRING,
     currentLat: type.STRING,
     currentLng: type.STRING,
+    rating_no: {
+      type: type.DOUBLE,
+      defaultValue: 0
+    },
     rating: {
-      type: type.INTEGER,
+      type: type.DOUBLE,
       defaultValue: 0
     },
     balance: {

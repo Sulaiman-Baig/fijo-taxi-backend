@@ -52,12 +52,12 @@ module.exports = {
             const {
                 openDoor
             } = req.body;
-            passengeId = req.params.passengeId;
+            passengerId = req.params.passengerId;
             const passengerPreference = await PassengerPreference.update({
                 openDoor: openDoor
             }, {
                 where: {
-                    passengeId: passengeId
+                    passengerId: passengerId
                 }
             });
             return res.status(http_status_codes.OK).json({
@@ -76,12 +76,12 @@ module.exports = {
             const {
                 airCondition
             } = req.body;
-            passengeId = req.params.passengeId;
+            passengerId = req.params.passengerId;
             const passengerPreference = await PassengerPreference.update({
                 airCondition: airCondition
             }, {
                 where: {
-                    passengeId: passengeId
+                    passengerId: passengerId
                 }
             });
             return res.status(http_status_codes.OK).json({
@@ -100,12 +100,12 @@ module.exports = {
             const {
                 conversation
             } = req.body;
-            passengeId = req.params.passengeId;
+            passengerId = req.params.passengerId;
             const passengerPreference = await PassengerPreference.update({
                 conversation: conversation
             }, {
                 where: {
-                    passengeId: passengeId
+                    passengerId: passengerId
                 }
             });
             return res.status(http_status_codes.OK).json({
@@ -124,12 +124,12 @@ module.exports = {
             const {
                 call
             } = req.body;
-            passengeId = req.params.passengeId;
+            passengerId = req.params.passengerId;
             const passengerPreference = await PassengerPreference.update({
                 call: call
             }, {
                 where: {
-                    passengeId: passengeId
+                    passengerId: passengerId
                 }
             });
             return res.status(http_status_codes.OK).json({

@@ -369,6 +369,65 @@ module.exports = {
         }
     },
 
+    async rateDriver(req, res, next) {
+
+        try {
+            driverId = req.params.driverId;
+            const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'rating', 'rating_no'] });
+            const {
+                rating
+            } = req.body;
+
+            if (driver.rating_no === 0) {
+
+                Driver.update({
+                    rating: rating,
+                    rating_no: 1
+                }, {
+                    where: {
+                        id: driverId
+                    }
+                });
+                return res.status(http_status_codes.OK).json({
+                    message: "Rated Successfully"
+                })
+
+            } else if (driver.rating_no === 1) {
+
+                Driver.update({
+                    rating_no: (driver.rating_no + 1),
+                    rating: (driver.rating + rating) / 2
+                }, {
+                    where: {
+                        id: driverId
+                    }
+                });
+                return res.status(http_status_codes.OK).json({
+                    message: "Rated Successfully"
+                })
+
+            } else if (driver.rating_no > 1) {
+
+                Driver.update({
+                    rating_no: driver.rating_no + 1,
+                    rating: ((driver.rating * driver.rating_no) + rating) / (driver.rating_no + 1)
+                }, {
+                    where: {
+                        id: driverId
+                    }
+                });
+                return res.status(http_status_codes.OK).json({
+                    message: "Rated Successfully"
+                })
+            }
+
+        } catch (error) {
+            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured"
+            })
+        }
+    },
+
     async updatePassword(req, res, next) {
         try {
             id = req.params.id;
@@ -414,7 +473,7 @@ module.exports = {
                     to: drivermail, // list of receivers
                     subject: 'Driver Password Verification Code', // Subject line
                     text: 'Here is a code to setup your password again', // plain text body
-                    html: 'Hi Dear Driver <br>Please verify your email using the link below and get back your password! <b style="font-size:24px;margin-left:30px"> Your code - ' +  rand + '<b>' // html body
+                    html: 'Hi Dear Driver <br>Please verify your email using the link below and get back your password! <b style="font-size:24px;margin-left:30px"> Your code - ' + rand + '<b>' // html body
 
                 };
                 transporter.sendMail(mailOptions, function (error, info) {
