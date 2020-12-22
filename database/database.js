@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 const AdminModel = require("../models/admin");
 const BookingModel = require("../models/booking");
 const ChatModel = require("../models/chat");
+const ContactUsModel = require("../models/contact_us");
 const ConversationModel = require("../models/conversation");
 const DiscountCodeModel = require("../models/discount_code");
 const FavoriteDriverModel = require("../models/favorite_drivers");
@@ -39,6 +40,7 @@ const sequelize = new Sequelize("fijotaxiapp", "root", "root1234", {
 const Admin = AdminModel(sequelize, Sequelize);
 const Booking = BookingModel(sequelize, Sequelize);
 const Chat = ChatModel(sequelize, Sequelize);
+const ContactUs = ContactUsModel(sequelize, Sequelize);
 const Conversation = ConversationModel(sequelize, Sequelize);
 const DiscountCode = DiscountCodeModel(sequelize, Sequelize);
 const Driver = DriverModel(sequelize, Sequelize);
@@ -84,6 +86,12 @@ Driver.hasMany(Vehicle);
 SavedLocation.belongsTo(Passenger);
 Passenger.hasMany(SavedLocation);
 
+ContactUs.belongsTo(Passenger);
+Passenger.hasMany(ContactUs);
+
+ContactUs.belongsTo(Driver);
+Driver.hasMany(ContactUs);
+
 
 Message.belongsTo(Conversation);
 Conversation.hasMany(Message, { foreignKey: 'conversationId', sourceKey: 'id' });
@@ -107,6 +115,7 @@ module.exports = {
     Admin,
     Booking,
     Chat,
+    ContactUs,
     Conversation,
     DiscountCode,
     Driver,
