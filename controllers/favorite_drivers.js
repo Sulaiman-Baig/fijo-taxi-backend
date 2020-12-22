@@ -11,6 +11,7 @@ module.exports = {
                 driverId,
                 passengerId
             } = req.body;
+
             const isFavoriteDriverExist = await FavoriteDriver.findOne({ where: { passengerId: passengerId } });
 
             if (isFavoriteDriverExist) {
@@ -29,7 +30,7 @@ module.exports = {
                     passengerId: passengerId
                 });
                 return res.status(http_status_codes.CREATED).json(favoriteDriver);
-            }          
+            }         
             
         } catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({

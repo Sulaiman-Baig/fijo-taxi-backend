@@ -6,6 +6,7 @@ var geodist = require('geodist');
 const {
     Booking,
     Driver,
+    Passenger,
     Vehicle,
     Message,
     Conversation
@@ -101,7 +102,7 @@ module.exports = {
                 }
 
                 if (paymentVia === 'card' && status === 'completed') {
-                    
+
                     const driver = await Driver.findOne({ where: { id: driverId } });
                     if (driver) {
                         Driver.update({
@@ -124,7 +125,7 @@ module.exports = {
 
     async getAllDriverBookings(req, res, next) {
         try {
-            const bookings = await Booking.findAll({ where: { driverId: driverId } });
+            const bookings = await Booking.findAll({ where: { driverId: driverId }, include: [{ model: Passenger }, { model: Driver }] });
             return res.status(http_status_codes.OK).json(bookings);
         } catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
@@ -135,7 +136,7 @@ module.exports = {
 
     async getAllCustomerBookings(req, res, next) {
         try {
-            const bookings = await Booking.findAll({ where: { passengerId: passengerId } });
+            const bookings = await Booking.findAll({ where: { passengerId: passengerId }, include: [{ model: Passenger }, { model: Driver }] });
             return res.status(http_status_codes.OK).json(bookings);
         } catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
@@ -146,7 +147,7 @@ module.exports = {
 
     async getAllBookings(req, res, next) {
         try {
-            const bookings = await Booking.findAll();
+            const bookings = await Booking.findAll({ include: [{ model: Passenger }, { model: Driver }] });
             return res.status(http_status_codes.OK).json(bookings);
         } catch (err) {
             return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
