@@ -61,7 +61,7 @@ module.exports = {
                                 passengerId: passenger.id
                             })
                                 .then(() => {
-                                    return res.status(http_status_codes.CREATED).json(
+                                    return res.status(http_status_codes.StatusCodes.CREATED).json(
                                         {
                                             message: 'Passenger is Created Successfully',
                                             passenger: passenger
@@ -72,7 +72,7 @@ module.exports = {
                 }
             });
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 error: "Error Occurd in Creating createPassenger"
             });
         }
@@ -112,18 +112,18 @@ module.exports = {
                             expiresIn: '3600'
                         })
                     } else {
-                        res.status(http_status_codes.UNAUTHORIZED).json({
+                        res.status(http_status_codes.StatusCodes.UNAUTHORIZED).json({
                             error: 'invalidcredentials'
                         })
                     }
                 } else {
-                    res.status(http_status_codes.UNAUTHORIZED).json({
+                    res.status(http_status_codes.StatusCodes.UNAUTHORIZED).json({
                         error: 'invalidcredentials'
                     })
                 }
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 error: 'error in signinPassenger'
             });
         }
@@ -155,7 +155,7 @@ module.exports = {
                     }
                 })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All Approved"
             });
         }
@@ -189,11 +189,14 @@ module.exports = {
                     id: passengerId
                 }
             })
-            return res.status(http_status_codes.OK).json({
-                message: "Updated sussessfully"
+            Passenger.findByPk(passengerId).then(resp => {
+                return res.status(http_status_codes.StatusCodes.OK).json({
+                message: "Updated sussessfully",
+                passengerObj: resp
+                })
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in updatePassenger"
             })
         }
@@ -212,11 +215,11 @@ module.exports = {
                     id: passengerId
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Updated sussessfully"
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in changePassengerAvailabiliyStatus"
             })
         }
@@ -232,13 +235,13 @@ module.exports = {
                 where: { email: email }
             });
             if (passenger) {
-                return res.status(http_status_codes.OK).json({ passenger: passenger, isPassengerExist: true });
+                return res.status(http_status_codes.StatusCodes.OK).json({ passenger: passenger, isPassengerExist: true });
             } else {
-                return res.status(http_status_codes.OK).json({ passenger: null, isPassengerExist: false });
+                return res.status(http_status_codes.StatusCodes.OK).json({ passenger: null, isPassengerExist: false });
             }
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in finding findPassengerByEmail"
             });
         }
@@ -254,13 +257,13 @@ module.exports = {
                 where: { phoneNumber: phoneNumber }
             });
             if (passenger) {
-                return res.status(http_status_codes.OK).json({ passenger: passenger, isPassengerExist: true });
+                return res.status(http_status_codes.StatusCodes.OK).json({ passenger: passenger, isPassengerExist: true });
             } else {
-                return res.status(http_status_codes.OK).json({ passenger: null, isPassengerExist: false });
+                return res.status(http_status_codes.StatusCodes.OK).json({ passenger: null, isPassengerExist: false });
             }
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in finding findPassengerByphoneNumber"
             });
         }
@@ -269,10 +272,10 @@ module.exports = {
     async getbyId(req, res, next) {
         try {
             const passenger = await Passenger.findOne({ where: { id: req.params.passengerId } });
-            return res.status(http_status_codes.OK).json(passenger);
+            return res.status(http_status_codes.StatusCodes.OK).json(passenger);
 
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error occured in fetching single passenger"
             })
         }
@@ -282,12 +285,12 @@ module.exports = {
         try {
             const passenger = await Passenger.findOne({ where: { id: req.params.passengerId } });
             if (passenger) {
-                return res.status(http_status_codes.OK).json({ isPassengerAvailable: passenger.passengerAvailablity });
+                return res.status(http_status_codes.StatusCodes.OK).json({ isPassengerAvailable: passenger.passengerAvailablity });
             } else {
-                return res.status(http_status_codes.OK).json({ message: 'Passenger Not Found' });
+                return res.status(http_status_codes.StatusCodes.OK).json({ message: 'Passenger Not Found' });
             }
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error occured in fetching single getAvailabilityStatus"
             })
         }
@@ -296,9 +299,9 @@ module.exports = {
     async getAll(req, res, next) {
         try {
             const passengers = await Passenger.findAll();
-            return res.status(http_status_codes.OK).json(passengers);
+            return res.status(http_status_codes.StatusCodes.OK).json(passengers);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All Passengers"
             });
         }
@@ -309,14 +312,14 @@ module.exports = {
             const passengerId = req.params.passengerId;
             const locations = await SavedLocation.findAll({ where: { passengerId: passengerId } });
             if(locations){
-                return res.status(http_status_codes.OK).json(locations);
+                return res.status(http_status_codes.StatusCodes.OK).json(locations);
 
             }else{
-                return res.status(http_status_codes.OK).json({message: 'No Location is Saved Yet!'});
+                return res.status(http_status_codes.StatusCodes.OK).json({message: 'No Location is Saved Yet!'});
 
             }
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All getAllSavedLocations"
             });
         }
@@ -382,11 +385,11 @@ module.exports = {
                     id: id
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Updated sussessfully"
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "An error updatePassword"
             })
         }
@@ -407,11 +410,11 @@ module.exports = {
                     id: passengerId
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Updated sussessfully"
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in updateCurrentLocation"
             })
         }

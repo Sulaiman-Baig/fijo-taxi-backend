@@ -33,12 +33,12 @@ module.exports = {
                         email: email
                     });
 
-                    return res.status(http_status_codes.CREATED).json({ error: 'Admin is Created Successfully' });
+                    return res.status(http_status_codes.StatusCodes.CREATED).json({ error: 'Admin is Created Successfully' });
 
                 }
             });
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 error: "Error Occurd in Creating createAdmin"
             });
         }
@@ -78,18 +78,18 @@ module.exports = {
                             expiresIn: '3600'
                         })
                     } else {
-                        res.status(http_status_codes.UNAUTHORIZED).json({
+                        res.status(http_status_codes.StatusCodes.UNAUTHORIZED).json({
                             error: 'invalidcredentials'
                         })
                     }
                 } else {
-                    res.status(http_status_codes.UNAUTHORIZED).json({
+                    res.status(http_status_codes.StatusCodes.UNAUTHORIZED).json({
                         error: 'invalidcredentials'
                     })
                 }
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 error: 'error in signinAdmin'
             });
         }

@@ -66,7 +66,7 @@ module.exports = {
             }
 
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Sending Message"
             });
         }
@@ -99,7 +99,7 @@ module.exports = {
                 res.json('No conversation is started yet!');
             }
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in fetching Conversation"
             });
         }

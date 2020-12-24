@@ -17,9 +17,9 @@ module.exports = {
                 routeTitle: routeTitle,
                 passengerId: passengerId
             });
-            return res.status(http_status_codes.CREATED).json(savedLocation);
+            return res.status(http_status_codes.StatusCodes.CREATED).json(savedLocation);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating SavedLocation"
             });
         }
@@ -43,12 +43,12 @@ module.exports = {
                     id: savedLocationId
                 }
             });
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: 'SavedLocation Updated Successfully'
             });
         } 
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Updating SavedLocation"
             });
         }
@@ -58,10 +58,10 @@ module.exports = {
         try {
             savedLocationId = req.params.id;
             const savedLocation = await SavedLocation.findOne({where: {id: savedLocationId }});
-            return res.status(http_status_codes.OK).json(savedLocation);
+            return res.status(http_status_codes.StatusCodes.OK).json(savedLocation);
         } 
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching SavedLocation"
             });
         }
@@ -70,10 +70,10 @@ module.exports = {
     async getAllSavedLocations(req, res, next) {
         try {            
             const savedLocations = await SavedLocation.findAll();
-            return res.status(http_status_codes.OK).json(savedLocations);
+            return res.status(http_status_codes.StatusCodes.OK).json(savedLocations);
         } 
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All SavedLocation"
             });
         }
@@ -84,10 +84,10 @@ module.exports = {
         try {    
             savedLocationId = req.params.id;        
             const savedLocation = await SavedLocation.destroy({where: {id: savedLocationId}});
-            return res.status(http_status_codes.OK).json({message: 'SavedLocation Deleted Successfully'});
+            return res.status(http_status_codes.StatusCodes.OK).json({message: 'SavedLocation Deleted Successfully'});
         } 
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Deleting SavedLocation"
             });
         }

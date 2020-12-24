@@ -56,12 +56,12 @@ module.exports = {
                         isApproved: false
                     })
                         .then((driver) => {
-                            return res.status(http_status_codes.CREATED).json({ message: 'Driver is Created Successfully', driverId: driver.id });
+                            return res.status(http_status_codes.StatusCodes.CREATED).json({ message: 'Driver is Created Successfully', driverId: driver.id });
                         });
                 }
             });
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 error: "Error Occurd in Creating Driver"
             });
         }
@@ -101,23 +101,23 @@ module.exports = {
                                 expiresIn: '3600'
                             })
                         } else if (isDriverExist.isApproved == false) {
-                            res.status(http_status_codes.UNAUTHORIZED).json({
+                            res.status(http_status_codes.StatusCodes.UNAUTHORIZED).json({
                                 message: 'Sorry, you are not approved by Admin yet.'
                             });
                         }
                     } else {
-                        res.status(http_status_codes.UNAUTHORIZED).json({
+                        res.status(http_status_codes.StatusCodes.UNAUTHORIZED).json({
                             error: 'invalidcredentials'
                         })
                     }
                 } else {
-                    res.status(http_status_codes.UNAUTHORIZED).json({
+                    res.status(http_status_codes.StatusCodes.UNAUTHORIZED).json({
                         error: 'driver does not exist'
                     })
                 }
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 error: 'error in signinDriver'
             });
         }
@@ -149,7 +149,7 @@ module.exports = {
                     }
                 })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All Approved"
             });
         }
@@ -166,12 +166,12 @@ module.exports = {
                     id: driverId
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Approved sussessfully",
                 approvalStatus: true
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in approveDriver"
             })
         }
@@ -188,12 +188,12 @@ module.exports = {
                     id: driverId
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Disapproved sussessfully",
                 approvalStatus: false
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in disApproveDriver"
             })
         }
@@ -237,12 +237,17 @@ module.exports = {
                 where: {
                     id: driverId
                 }
+            }).then(findDriver => {
+                Driver.findByPk(driverId).then(resp => {
+                    return res.status(http_status_codes.OK).json({
+                        message: "Updated sussessfully",
+                        driverObj: resp
+                    })
+                })
             })
-            return res.status(http_status_codes.OK).json({
-                message: "Updated sussessfully"
-            })
+
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in updateDriver"
             })
         }
@@ -261,11 +266,11 @@ module.exports = {
                     id: driverId
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Updated sussessfully"
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in changeDriverAvailabiliyStatus"
             })
         }
@@ -294,11 +299,11 @@ module.exports = {
                     id: driverId
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Updated sussessfully"
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in createDriverBankDetails"
             })
         }
@@ -321,11 +326,11 @@ module.exports = {
                     id: driverId
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Updated sussessfully"
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in updateCurrentLocation"
             })
         }
@@ -335,12 +340,12 @@ module.exports = {
         try {
             const driver = await Driver.findOne({ where: { id: req.params.driverId } });
             if (driver) {
-                return res.status(http_status_codes.OK).json({ isDriverAvailable: driver.diverAvailablity });
+                return res.status(http_status_codes.StatusCodes.OK).json({ isDriverAvailable: driver.diverAvailablity });
             } else {
-                return res.status(http_status_codes.OK).json({ message: 'Driver Not Found' });
+                return res.status(http_status_codes.StatusCodes.OK).json({ message: 'Driver Not Found' });
             }
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error occured in fetching single getAvailabilityStatus"
             })
         }
@@ -349,10 +354,10 @@ module.exports = {
     async getbyId(req, res, next) {
         try {
             const driver = await Driver.findOne({ where: { id: req.params.driverId } });
-            return res.status(http_status_codes.OK).json(driver);
+            return res.status(http_status_codes.StatusCodes.OK).json(driver);
 
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error occured in fetching single driver"
             })
         }
@@ -361,9 +366,9 @@ module.exports = {
     async getAll(req, res, next) {
         try {
             const drivers = await Driver.findAll();
-            return res.status(http_status_codes.OK).json(drivers);
+            return res.status(http_status_codes.StatusCodes.OK).json(drivers);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All drivers"
             });
         }
@@ -388,7 +393,7 @@ module.exports = {
                         id: driverId
                     }
                 });
-                return res.status(http_status_codes.OK).json({
+                return res.status(http_status_codes.StatusCodes.OK).json({
                     message: "Rated Successfully"
                 })
 
@@ -402,7 +407,7 @@ module.exports = {
                         id: driverId
                     }
                 });
-                return res.status(http_status_codes.OK).json({
+                return res.status(http_status_codes.StatusCodes.OK).json({
                     message: "Rated Successfully"
                 })
 
@@ -416,13 +421,13 @@ module.exports = {
                         id: driverId
                     }
                 });
-                return res.status(http_status_codes.OK).json({
+                return res.status(http_status_codes.StatusCodes.OK).json({
                     message: "Rated Successfully"
                 })
             }
 
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured"
             })
         }
@@ -442,11 +447,11 @@ module.exports = {
                     id: id
                 }
             })
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: "Updated sussessfully"
             })
         } catch (error) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "An error updatePassword"
             })
         }

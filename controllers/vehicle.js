@@ -32,9 +32,9 @@ module.exports = {
                 lisencePhoto: lisencePhoto,
                 driverId: driverId
             });
-            return res.status(http_status_codes.CREATED).json(vehicle);
+            return res.status(http_status_codes.StatusCodes.CREATED).json(vehicle);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating createVehicle"
             });
         }
@@ -72,12 +72,12 @@ module.exports = {
                     id: vehicleId
                 }
             });
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: 'Vehicle Updated Successfully'
             });
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Updating updateVehicle"
             });
         }
@@ -87,10 +87,10 @@ module.exports = {
         try {
             const vehicleId = req.params.id;
             const vehicle = await Vehicle.findOne({ where: { id: vehicleId } });
-            return res.status(http_status_codes.OK).json(vehicle);
+            return res.status(http_status_codes.StatusCodes.OK).json(vehicle);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getVehicle"
             });
         }
@@ -100,10 +100,10 @@ module.exports = {
         try {
             const driverId = req.params.driverId;
             const vehicle = await Vehicle.findOne({ where: { driverId: driverId } });
-            return res.status(http_status_codes.OK).json({vehicleByDriver: vehicle});
+            return res.status(http_status_codes.StatusCodes.StatusCodes.OK).json({vehicleByDriver: vehicle});
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getVehicleByDriver"
             });
         }
@@ -112,10 +112,10 @@ module.exports = {
     async getAllVehicles(req, res, next) {
         try {
             const vehicles = await Vehicle.findAll();
-            return res.status(http_status_codes.OK).json(vehicles);
+            return res.status(http_status_codes.StatusCodes.OK).json(vehicles);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getAllVehicles"
             });
         }
@@ -126,10 +126,10 @@ module.exports = {
         try {
             const vehicleId = req.params.id;
             const vehicle = await Vehicle.destroy({ where: { id: vehicleId } });
-            return res.status(http_status_codes.OK).json({ message: 'Vehicle Deleted Successfully' });
+            return res.status(http_status_codes.StatusCodes.OK).json({ message: 'Vehicle Deleted Successfully' });
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Deleting Vehicle"
             });
         }

@@ -27,9 +27,9 @@ module.exports = {
                 funding: funding,
                 passengerId: passengerId
             });
-            return res.status(http_status_codes.CREATED).json(passengerPaymentMethod);
+            return res.status(http_status_codes.StatusCodes.CREATED).json(passengerPaymentMethod);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating PassengerPaymentMethod"
             });
         }
@@ -60,12 +60,12 @@ module.exports = {
                     id: passengerPaymentMethodId
                 }
             });
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: 'PassengerPaymentMethod Updated Successfully'
             });
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Updating PassengerPaymentMethod"
             });
         }
@@ -75,10 +75,10 @@ module.exports = {
         try {
             passengerPaymentMethodId = req.params.passengerPaymentMethodId;
             const passengerPaymentMethod = await PassengerPaymentMethod.findOne({ where: { id: passengerPaymentMethodId } });
-            return res.status(http_status_codes.OK).json(passengerPaymentMethod);
+            return res.status(http_status_codes.StatusCodes.OK).json(passengerPaymentMethod);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching PassengerPaymentMethod"
             });
         }
@@ -87,10 +87,10 @@ module.exports = {
     async getAllPassengerPaymentMethods(req, res, next) {
         try {
             const passengerPaymentMethod = await PassengerPaymentMethod.findAll();
-            return res.status(http_status_codes.OK).json(passengerPaymentMethod);
+            return res.status(http_status_codes.StatusCodes.OK).json(passengerPaymentMethod);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All PassengerPaymentMethod"
             });
         }
@@ -100,10 +100,10 @@ module.exports = {
         try {
             passengerId = req.params.passengerId;
             const passengerPaymentMethod = await PassengerPaymentMethod.findAll({ where: { passengerId: passengerId } });
-            return res.status(http_status_codes.OK).json(passengerPaymentMethod);
+            return res.status(http_status_codes.StatusCodes.OK).json(passengerPaymentMethod);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All getAllPassengerPaymentMethodsByPassenger"
             });
         }
@@ -114,10 +114,10 @@ module.exports = {
         try {
             passengerPaymentMethodId = req.params.passengerPaymentMethodId;
             const passengerPaymentMethod = await PassengerPaymentMethod.destroy({ where: { id: passengerPaymentMethodId } });
-            return res.status(http_status_codes.OK).json({ message: 'PassengerPaymentMethod Deleted Successfully' });
+            return res.status(http_status_codes.StatusCodes.OK).json({ message: 'PassengerPaymentMethod Deleted Successfully' });
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Deleting PassengerPaymentMethod"
             });
         }

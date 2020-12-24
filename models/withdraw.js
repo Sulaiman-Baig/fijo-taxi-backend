@@ -7,7 +7,12 @@ module.exports = (sequelize, type) => {
             required: true
         },
         amount: type.STRING,
-        isPaid: type.BOOLEAN,
+        isPaid: {
+            type: type.BOOLEAN,
+            defaultValue: false
+        },
     });
 };
+
+
 

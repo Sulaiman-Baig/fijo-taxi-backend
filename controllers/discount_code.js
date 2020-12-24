@@ -17,9 +17,9 @@ module.exports = {
                 discountAmount: discountAmount               
             });
 
-            return res.status(http_status_codes.CREATED).json(code);
+            return res.status(http_status_codes.StatusCodes.CREATED).json(code);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating createDiscountCode"
             });
         }
@@ -42,12 +42,12 @@ module.exports = {
                     id: discountCodeId
                 }
             });
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: 'DiscountCode Updated Successfully'
             });
         } 
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Updating DiscountCode"
             });
         }
@@ -57,10 +57,10 @@ module.exports = {
         try {
             discountCodeId = req.params.discountCodeId;
             const discountCode = await DiscountCode.findOne({where: {id: discountCodeId }});
-            return res.status(http_status_codes.OK).json(discountCode);
+            return res.status(http_status_codes.StatusCodes.OK).json(discountCode);
         } 
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching DiscountCode"
             });
         }
@@ -69,10 +69,10 @@ module.exports = {
     async getAllDiscountCodes(req, res, next) {
         try {            
             const discountCodes = await DiscountCode.findAll();
-            return res.status(http_status_codes.OK).json(discountCodes);
+            return res.status(http_status_codes.StatusCodes.OK).json(discountCodes);
         } 
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All DiscountCode"
             });
         }
@@ -83,10 +83,10 @@ module.exports = {
         try {    
             discountCodeId = req.params.discountCodeId;        
             const discountCode = await DiscountCode.destroy({where: {id: discountCodeId}});
-            return res.status(http_status_codes.OK).json({message: 'DiscountCode Deleted Successfully'});
+            return res.status(http_status_codes.StatusCodes.OK).json({message: 'DiscountCode Deleted Successfully'});
         } 
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Deleting DiscountCode"
             });
         }

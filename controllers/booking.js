@@ -40,10 +40,10 @@ module.exports = {
                     }
                 ]
             });
-            return res.status(http_status_codes.OK).json(drivers);
+            return res.status(http_status_codes.StatusCodes.OK).json(drivers);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in finding drivers"
             });
         }
@@ -115,9 +115,9 @@ module.exports = {
                     }
                 }
             }
-            return res.status(http_status_codes.OK).json({ message: 'Booking Created Successfully' });
+            return res.status(http_status_codes.StatusCodes.OK).json({ message: 'Booking Created Successfully' });
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating Booking"
             });
         }
@@ -125,10 +125,10 @@ module.exports = {
 
     async getAllDriverBookings(req, res, next) {
         try {
-            const bookings = await Booking.findAll({ where: { driverId: driverId }, include: [{ model: Passenger }, { model: Driver }] });
-            return res.status(http_status_codes.OK).json(bookings);
+            const bookings = await Booking.findAll({ where: { driverId: req.params.driverId }, include: [{ model: Passenger, attributes: ['firstName', 'lastName', 'email', 'profilePhoto'] }] });
+            return res.status(http_status_codes.StatusCodes.OK).json(bookings);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getAllDriverBookings"
             });
         }
@@ -136,10 +136,10 @@ module.exports = {
 
     async getAllCustomerBookings(req, res, next) {
         try {
-            const bookings = await Booking.findAll({ where: { passengerId: passengerId }, include: [{ model: Passenger }, { model: Driver }] });
-            return res.status(http_status_codes.OK).json(bookings);
+            const bookings = await Booking.findAll({ where: { passengerId: req.params.passengerId }, include: [{ model: Driver, attributes: ['firstName', 'lastName', 'email', 'driverPhoto'] }] });
+            return res.status(http_status_codes.StatusCodes.OK).json(bookings);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getAllCustomerBookings"
             });
         }
@@ -148,9 +148,9 @@ module.exports = {
     async getAllBookings(req, res, next) {
         try {
             const bookings = await Booking.findAll({ include: [{ model: Passenger }, { model: Driver }] });
-            return res.status(http_status_codes.OK).json(bookings);
+            return res.status(http_status_codes.StatusCodes.OK).json(bookings);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getAllBookings"
             });
         }
@@ -307,9 +307,9 @@ module.exports = {
 
 
             const bookings = await Booking.findAll();
-            return res.status(http_status_codes.OK).json(bookings);
+            return res.status(http_status_codes.StatusCodes.OK).json(bookings);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching getAllBookings"
             });
         }
@@ -404,23 +404,23 @@ module.exports = {
                 });
                 if (driversArray.length !== 0) {
 
-                    return res.status(http_status_codes.OK).json(
+                    return res.status(http_status_codes.StatusCodes.OK).json(
                         { driversIds: driversArray, objFromRequest: objFromRequest }
                     );
 
                 } else {
-                    return res.status(http_status_codes.NOT_FOUND).json({
+                    return res.status(http_status_codes.StatusCodes.NOT_FOUND).json({
                         errors: 'Oooops! No Near By Driver is Found!'
                     });
                 }
             } else {
-                return res.status(http_status_codes.NOT_FOUND).json({
+                return res.status(http_status_codes.StatusCodes.NOT_FOUND).json({
                     errors: 'No Driver Registered yet!'
                 });
             }
 
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching findNearByDrivers"
             });
         }

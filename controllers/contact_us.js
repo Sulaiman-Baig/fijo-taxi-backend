@@ -20,9 +20,9 @@ module.exports = {
                 subject: subject,
                 message: message
             });
-            return res.status(http_status_codes.CREATED).json(contactUs);
+            return res.status(http_status_codes.StatusCodes.CREATED).json(contactUs);
         } catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating ContactUs"
             });
         }
@@ -49,12 +49,12 @@ module.exports = {
                     id: contactUsId
                 }
             });
-            return res.status(http_status_codes.OK).json({
+            return res.status(http_status_codes.StatusCodes.OK).json({
                 message: 'ContactUs Updated Successfully'
             });
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Updating ContactUs"
             });
         }
@@ -64,10 +64,10 @@ module.exports = {
         try {
             contactUsId = req.params.id;
             const contactUs = await ContactUs.findOne({ where: { id: contactUsId } });
-            return res.status(http_status_codes.OK).json(contactUs);
+            return res.status(http_status_codes.StatusCodes.OK).json(contactUs);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching ContactUs"
             });
         }
@@ -77,10 +77,10 @@ module.exports = {
         try {
             passengerId = req.params.passengerId;
             const contactUs = await ContactUs.findOne({ where: { passengerId: passengerId } });
-            return res.status(http_status_codes.OK).json(contactUs);
+            return res.status(http_status_codes.StatusCodes.OK).json(contactUs);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching ContactUs"
             });
         }
@@ -91,10 +91,10 @@ module.exports = {
         try {
             driverId = req.params.driverId;
             const contactUs = await ContactUs.findOne({ where: { driverId: driverId } });
-            return res.status(http_status_codes.OK).json(contactUs);
+            return res.status(http_status_codes.StatusCodes.OK).json(contactUs);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching ContactUs"
             });
         }
@@ -103,10 +103,10 @@ module.exports = {
     async getAllContactUss(req, res, next) {
         try {
             const contactUss = await ContactUs.findAll();
-            return res.status(http_status_codes.OK).json(contactUss);
+            return res.status(http_status_codes.StatusCodes.OK).json(contactUss);
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Fetching All ContactUs"
             });
         }
@@ -117,10 +117,10 @@ module.exports = {
         try {
             contactUsId = req.params.id;
             const contactUs = await ContactUs.destroy({ where: { id: contactUsId } });
-            return res.status(http_status_codes.OK).json({ message: 'ContactUs Deleted Successfully' });
+            return res.status(http_status_codes.StatusCodes.OK).json({ message: 'ContactUs Deleted Successfully' });
         }
         catch (err) {
-            return res.status(http_status_codes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Deleting ContactUs"
             });
         }
