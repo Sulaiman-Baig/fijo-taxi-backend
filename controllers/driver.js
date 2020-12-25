@@ -363,6 +363,40 @@ module.exports = {
         }
     },
 
+    async getPhotoById(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'driverPhoto'] });
+            return res.status(http_status_codes.StatusCodes.OK).json(driver);
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+    async getBalanceById(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'balance']  });
+            return res.status(http_status_codes.StatusCodes.OK).json(driver);
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+    async getRatingById(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'rating'] });
+            return res.status(http_status_codes.StatusCodes.OK).json(driver);
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+
     async getAll(req, res, next) {
         try {
             const drivers = await Driver.findAll();

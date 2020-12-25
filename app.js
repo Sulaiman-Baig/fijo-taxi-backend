@@ -21,6 +21,7 @@ var passengerPrefrenceRouter = require('./routes/passenger_prefrences');
 var passengerPaymentRouter = require('./routes/passenger_payment_method');
 var savedLocationRouter = require('./routes/saved_location');
 var vehicleRouter = require('./routes/vehicle');
+var withdrawRouter = require('./routes/withdraw');
 
 
 
@@ -71,6 +72,7 @@ app.use('/passenger-prefrence', passengerPrefrenceRouter);
 app.use('/passenger-payment', passengerPaymentRouter);
 app.use('/saved-location', savedLocationRouter);
 app.use('/vehicle', vehicleRouter);
+app.use('/withdraw', withdrawRouter);
 
 
 

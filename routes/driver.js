@@ -14,6 +14,9 @@ router.post('/change-driver-availabiliy-status/:driverId', driverController.chan
 router.post('/create-driver-bank-details/:driverId', driverController.createDriverBankDetails);
 router.post('/update-current-location/:driverId', driverController.updateCurrentLocation);
 router.get('/get/:driverId', driverController.getbyId);
+router.get('/get/:driverId', driverController.getPhotoById);
+router.get('/get/:driverId', driverController.getBalanceById);
+router.get('/get/:driverId', driverController.getRatingById);
 router.get('/get-availability-status/:driverId', driverController.getAvailabilityStatus);
 router.get('/getall', driverController.getAll);
 router.post('/rating/:driverId', driverController.rateDriver);

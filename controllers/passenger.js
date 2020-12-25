@@ -189,12 +189,14 @@ module.exports = {
                     id: passengerId
                 }
             })
-            Passenger.findByPk(passengerId).then(resp => {
-                return res.status(http_status_codes.StatusCodes.OK).json({
-                message: "Updated sussessfully",
-                passengerObj: resp
-                })
-            })
+                .then(() => {
+                    Passenger.findByPk(passengerId).then(resp => {
+                        return res.status(http_status_codes.StatusCodes.OK).json({
+                            message: "Updated sussessfully",
+                            passengerObj: resp
+                        })
+                    })
+                });
         } catch (error) {
             return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in updatePassenger"
@@ -311,11 +313,11 @@ module.exports = {
         try {
             const passengerId = req.params.passengerId;
             const locations = await SavedLocation.findAll({ where: { passengerId: passengerId } });
-            if(locations){
+            if (locations) {
                 return res.status(http_status_codes.StatusCodes.OK).json(locations);
 
-            }else{
-                return res.status(http_status_codes.StatusCodes.OK).json({message: 'No Location is Saved Yet!'});
+            } else {
+                return res.status(http_status_codes.StatusCodes.OK).json({ message: 'No Location is Saved Yet!' });
 
             }
         } catch (err) {
