@@ -100,7 +100,7 @@ module.exports = {
         try {
             const driverId = req.params.driverId;
             const vehicle = await Vehicle.findOne({ where: { driverId: driverId } });
-            return res.status(http_status_codes.StatusCodes.StatusCodes.OK).json({vehicleByDriver: vehicle});
+            return res.status(http_status_codes.StatusCodes.OK).json({vehicleByDriver: vehicle});
         }
         catch (err) {
             return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({

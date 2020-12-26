@@ -26,12 +26,12 @@ module.exports = {
                         }
                     })
                         .then(() => {
-                            return res.status(http_status_codes.StatusCodes.StatusCodes.CREATED).json(withdraw);
+                            return res.status(http_status_codes.StatusCodes.CREATED).json(withdraw);
                         });
                 });
 
         } catch (err) {
-            return res.status(http_status_codes.StatusCodes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating Withdraw"
             });
         }
@@ -65,7 +65,7 @@ module.exports = {
                         isWithdrawRequested: false
                     }
                 });
-                
+
                 return res.status(http_status_codes.StatusCodes.OK).json({
                     message: 'Withdraw Piad to Driver Successfully'
                 });
