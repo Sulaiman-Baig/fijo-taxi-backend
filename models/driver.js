@@ -43,6 +43,10 @@ module.exports = (sequelize, type) => {
       type: type.BOOLEAN,
       defaultValue: true
     },
+    isWithdrawRequested: {
+      type: type.BOOLEAN,
+      defaultValue: false
+    },
   });
 };
 

@@ -397,6 +397,30 @@ module.exports = {
         }
     },
 
+    async getRatingBalanceById(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'rating','balance'] });
+            return res.status(http_status_codes.StatusCodes.OK).json(driver);
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+
+    async getIsRequestedStatusById(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'isWithdrawRequested'] });
+            return res.status(http_status_codes.StatusCodes.OK).json(driver);
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+
     async getAll(req, res, next) {
         try {
             const drivers = await Driver.findAll();

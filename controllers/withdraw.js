@@ -12,11 +12,24 @@ module.exports = {
             const {
                 amount
             } = req.body;
+
             const withdraw = await Withdraw.create({
                 amount: amount,
                 driverId: driverId
-            });
-            return res.status(http_status_codes.StatusCodes.StatusCodes.CREATED).json(Withdraw);
+            })
+                .then(() => {
+                    Driver.update({
+                        isWithdrawRequested: true
+                    }, {
+                        where: {
+                            id: driverId
+                        }
+                    })
+                        .then(() => {
+                            return res.status(http_status_codes.StatusCodes.StatusCodes.CREATED).json(withdraw);
+                        });
+                });
+
         } catch (err) {
             return res.status(http_status_codes.StatusCodes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "Error Occurd in Creating Withdraw"
@@ -48,10 +61,11 @@ module.exports = {
                     balance: (driver.balance - amount)
                 }, {
                     where: {
-                        id: driverId
+                        id: driverId,
+                        isWithdrawRequested: false
                     }
                 });
-
+                
                 return res.status(http_status_codes.StatusCodes.OK).json({
                     message: 'Withdraw Piad to Driver Successfully'
                 });
