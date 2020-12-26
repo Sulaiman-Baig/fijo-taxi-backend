@@ -163,12 +163,13 @@ module.exports = {
                 isMorning,
                 isWeekend,
                 isAirport,
-                seatingCapacity
+                seatingCapacity,
+                isLite
             } = req.body;
             // morning time starts
             if (km < 25) {
                 if (isWeekend == false && isMorning == true) {
-                    if (seatingCapacity >= 5) {
+                    if (seatingCapacity >= 5 && isLite == false) {
                         //  morning time & seating capacity >= 25
                         let perKmPrice = (1.09 * km);
                         let estimatedPrice = (perKmPrice + 2.0 + 1.5);
@@ -191,7 +192,7 @@ module.exports = {
             }
             else if (km > 25) {
                 if (isWeekend == false && isMorning == true) {
-                    if (seatingCapacity >= 5) {
+                    if (seatingCapacity >= 5 && isLite == false) {
                         //  morning time & seating capacity >= 25
                         let perKmPrice = (1.20 * km);
                         let estimatedPrice = (perKmPrice + 2.0 + 1.5);
@@ -212,7 +213,7 @@ module.exports = {
             // night time starts
             if (km < 25) {
                 if (isMorning == false) {
-                    if (seatingCapacity >= 5) {
+                    if (seatingCapacity >= 5 && isLite == false) {
                         //  night time & seating capacity >= 25
                         let perKmPrice = (1.19 * km);
                         let estimatedPrice = (perKmPrice + 2.5 + 2);
@@ -230,7 +231,7 @@ module.exports = {
             }
             else if (km > 25) {
                 if (isMorning == false) {
-                    if (seatingCapacity >= 5) {
+                    if (seatingCapacity >= 5 && isLite == false) {
                         //  night time & seating capacity >= 25
                         let perKmPrice = (1.40 * km);
                         let estimatedPrice = (perKmPrice + 2.5 + 2);
@@ -251,7 +252,7 @@ module.exports = {
             // day time + weekend starts
             if (km < 25) {
                 if (isWeekend == true && isMorning == true) {
-                    if (seatingCapacity >= 5) {
+                    if (seatingCapacity >= 5 && isLite == false) {
                         //  day time + weekend & seating capacity >= 25
                         let perKmPrice = (1.19 * km);
                         let estimatedPrice = (perKmPrice + 2.0 + 2.0);
@@ -269,7 +270,7 @@ module.exports = {
             }
             else if (km > 25) {
                 if (isWeekend == true && isMorning == true) {
-                    if (seatingCapacity >= 5) {
+                    if (seatingCapacity >= 5 && isLite == false) {
                         //  day time + weekend & seating capacity >= 25
                         let perKmPrice = (1.40 * km);
                         let estimatedPrice = (perKmPrice + 2.0 + 2.0);
