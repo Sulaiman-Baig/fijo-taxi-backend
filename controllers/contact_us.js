@@ -112,6 +112,30 @@ module.exports = {
         }
     },
 
+    async getAllContactUssByPassenger(req, res, next) {
+        try {
+            const contactUss = await ContactUs.findAll(where: {driverId: null});
+            return res.status(http_status_codes.StatusCodes.OK).json(contactUss);
+        }
+        catch (err) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching All ContactUs"
+            });
+        }
+    },
+
+    async getAllContactUssByDriver(req, res, next) {
+        try {
+            const contactUss = await ContactUs.findAll({where: {passengerId: null}});
+            return res.status(http_status_codes.StatusCodes.OK).json(contactUss);
+        }
+        catch (err) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Fetching All ContactUs"
+            });
+        }
+    },
+
 
     async deleteContactUs(req, res, next) {
         try {
