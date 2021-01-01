@@ -1,7 +1,7 @@
 const http_status_codes = require('http-status-codes');
 const {
 
-    ContactUs
+    ContactUs, Passenger, Driver
 } = require('../database/database');
 module.exports = {
 
@@ -114,7 +114,7 @@ module.exports = {
 
     async getAllContactUssByPassenger(req, res, next) {
         try {
-            const contactUss = await ContactUs.findAll({where: {driverId: null}});
+            const contactUss = await ContactUs.findAll({ where: { driverId: null }, include: { model: Passenger } });
             return res.status(http_status_codes.StatusCodes.OK).json(contactUss);
         }
         catch (err) {
@@ -126,7 +126,7 @@ module.exports = {
 
     async getAllContactUssByDriver(req, res, next) {
         try {
-            const contactUss = await ContactUs.findAll({where: {passengerId: null}});
+            const contactUss = await ContactUs.findAll({ where: { passengerId: null }, include: { model: Driver } });
             return res.status(http_status_codes.StatusCodes.OK).json(contactUss);
         }
         catch (err) {
