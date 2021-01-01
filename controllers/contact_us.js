@@ -114,7 +114,7 @@ module.exports = {
 
     async getAllContactUssByPassenger(req, res, next) {
         try {
-            const contactUss = await ContactUs.findAll(where: {driverId: null});
+            const contactUss = await ContactUs.findAll({where: {driverId: null}});
             return res.status(http_status_codes.StatusCodes.OK).json(contactUss);
         }
         catch (err) {
