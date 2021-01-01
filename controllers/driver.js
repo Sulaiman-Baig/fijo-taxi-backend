@@ -385,6 +385,30 @@ module.exports = {
             })
         }
     },
+
+    async getViaCashBalanceById(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'viacash']  });
+            return res.status(http_status_codes.StatusCodes.OK).json(driver);
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+    async getViaCardBalanceById(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'viacard']  });
+            return res.status(http_status_codes.StatusCodes.OK).json(driver);
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+
     async getRatingById(req, res, next) {
         try {
             const driver = await Driver.findOne({ where: { id: req.params.driverId }, attributes: ['id', 'rating'] });

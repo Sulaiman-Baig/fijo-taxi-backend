@@ -35,6 +35,14 @@ module.exports = (sequelize, type) => {
       type: type.INTEGER,
       defaultValue: 0
     },
+    viacash: {
+      type: type.INTEGER,
+      defaultValue: 0
+    },
+    viacard: {
+      type: type.INTEGER,
+      defaultValue: 0
+    },
     isApproved: {
       type: type.BOOLEAN,
       defaultValue: false

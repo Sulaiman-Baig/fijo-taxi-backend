@@ -16,6 +16,8 @@ router.post('/update-current-location/:driverId', driverController.updateCurrent
 router.get('/get/:driverId', driverController.getbyId);
 router.get('/get-photo/:driverId', driverController.getPhotoById);
 router.get('/get-balance/:driverId', driverController.getBalanceById);
+router.get('/get-viacash-balance/:driverId', driverController.getViaCashBalanceById);
+router.get('/get-viacard-balance/:driverId', driverController.getViaCardBalanceById);
 router.get('/get-rating/:driverId', driverController.getRatingById);
 router.get('/get-rating-balance/:driverId', driverController.getRatingBalanceById);
 router.get('/get-request-status/:driverId', driverController.getIsRequestedStatusById);

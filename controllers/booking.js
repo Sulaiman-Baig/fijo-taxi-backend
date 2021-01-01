@@ -106,7 +106,21 @@ module.exports = {
                     const driver = await Driver.findOne({ where: { id: driverId } });
                     if (driver) {
                         Driver.update({
-                            balance: (exactPriceForDriver + driver.balance)
+                            balance: (exactPriceForDriver + driver.balance),
+                            viacard: (exactPriceForDriver + driver.viacard)
+                        }, {
+                            where: {
+                                id: driverId
+                            }
+                        });
+                    }
+                } else if (paymentVia === 'cash' && status === 'completed') {
+
+                    const driver = await Driver.findOne({ where: { id: driverId } });
+                    if (driver) {
+                        Driver.update({
+                            balance: (exactPriceForDriver + driver.balance),
+                            viacash: (exactPriceForDriver + driver.viacash)
                         }, {
                             where: {
                                 id: driverId
