@@ -8,6 +8,7 @@ router.post('/signup', passengerController.createPassenger);
 router.post('/signin', passengerController.signinPassenger);
 router.post('/resetpassword/:id' , passengerController.resetPassword);
 router.post('/update/:passengerId', passengerController.updatePassenger);
+router.post('/logout/:passengerId', passengerController.logoutPassenger);
 router.post('/change-passenger-availabiliy-status/:passengerId', passengerController.changePassengerAvailabiliyStatus);
 router.get('/get-availability-status/:passengerId', passengerController.getAvailabilityStatus);
 router.get('/get/:passengerId', passengerController.getbyId);
