@@ -8,6 +8,7 @@ const nodemailer = require("nodemailer");
 const {
     Driver
 } = require('../database/database');
+const driver = require('../models/driver');
 module.exports = {
 
     async createDriver(req, res, next) {
@@ -25,7 +26,9 @@ module.exports = {
                 gender,
                 address,
                 postalCode,
-                city
+                city,
+                currentLat,
+                currentLng
             } = req.body;
 
             Driver.findOne({
@@ -53,7 +56,9 @@ module.exports = {
                         nie_Dnle_BackPic: null,
                         nationality: null,
                         accountNumber: null,
-                        isApproved: false
+                        isApproved: false,
+                        currentLat: currentLat,
+                        currentLng: currentLng
                     })
                         .then((driver) => {
                             return res.status(http_status_codes.StatusCodes.CREATED).json({ message: 'Driver is Created Successfully', driverId: driver.id, driverObj: driver });
@@ -84,7 +89,7 @@ module.exports = {
                     if (isDriverExist.isLogedIn == true) {
                         res.json({
                             message: "You are already login from another device. Please logput first to login from this device",
-                            
+
                         })
                     } else {
                         const verify_password = hashedpassword.verify(
@@ -230,7 +235,15 @@ module.exports = {
                         isApproved: true
                     }
                     ]
-                }
+                },
+                attributes: [
+                    'id',
+                    'firstName',
+                    'lastName',
+                    'currentLat',
+                    'currentLng',
+                    'email',
+                ]
             });
             if (driver) {
                 return res.status(http_status_codes.StatusCodes.OK).json({
@@ -249,6 +262,33 @@ module.exports = {
             });
         }
     },
+
+
+    async isDriverLogin(req, res, next) {
+        try {
+            const driver = await Driver.findOne({ where: { id: req.params.driverId } });
+            return res.status(http_status_codes.StatusCodes.OK).json({ isDriverLogin: driver.isLogedIn });
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error occured in fetching single driver"
+            })
+        }
+    },
+
+    async deleteDriver(req, res, next) {
+        try {
+            driverId = req.params.driverId;
+            const driver = await Driver.destroy({ where: { id: driverId } });
+            return res.status(http_status_codes.StatusCodes.OK).json({ message: 'Driver Deleted Successfully' });
+        }
+        catch (err) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "Error Occurd in Deleting Driver"
+            });
+        }
+    },
+
 
     async approveDriver(req, res, next) {
         try {
@@ -351,7 +391,7 @@ module.exports = {
     async logoutDriver(req, res, next) {
         try {
             driverId = req.params.driverId;
-         
+
             Driver.update({
                 isLogedIn: false
             }, {
@@ -367,6 +407,29 @@ module.exports = {
         } catch (error) {
             return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: "an error occured in logoutDriver"
+            })
+        }
+    },
+
+    async isLogedInTrue(req, res, next) {
+        try {
+            driverId = req.params.driverId;
+
+            Driver.update({
+                isLogedIn: true
+            }, {
+                where: {
+                    id: driverId
+                }
+            }).then(a => {
+                return res.status(http_status_codes.StatusCodes.OK).json({
+                    message: "is Logged In sussessfully"
+                })
+            })
+
+        } catch (error) {
+            return res.status(http_status_codes.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: "an error occured in isLogedInTrue Driver"
             })
         }
     },
@@ -433,12 +496,17 @@ module.exports = {
             const {
                 currentLat,
                 currentLng,
-
+                city,
+                address,
+                postalCode,
 
             } = req.body
             Driver.update({
                 currentLat: currentLat,
                 currentLng: currentLng,
+                city: city,
+                address: address,
+                postalCode: postalCode,
             }, {
                 where: {
                     id: driverId
